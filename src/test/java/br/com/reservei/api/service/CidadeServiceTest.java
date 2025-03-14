@@ -11,6 +11,7 @@ import br.com.reservei.api.repository.CidadeRepository;
 import br.com.reservei.api.service.impl.CidadeServiceImpl;
 import br.com.reservei.api.utils.CidadeHelper;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,8 +29,6 @@ import static br.com.reservei.api.utils.EstadoHelper.gerarEstadoDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
@@ -61,43 +60,46 @@ class CidadeServiceTest {
         this.estadoDTO = gerarEstadoDto(estado);
     }
 
+    @DisplayName("Buscar Cidade")
     @Nested
     class BuscarCidade {
 
+        @DisplayName("Deve buscar um Cidade pelo ID fornecido")
         @Test
         void deveBuscarCidadePorId() {
             // Arrange
-            when(cidadeRepository.findById(anyLong()))
-                    .thenReturn(Optional.of(cidade));
-            when(cidadeMapper.toDto(any()))
-                    .thenReturn(gerarCidadeDto(cidade));
+            when(cidadeRepository.findById(cidade.getId())).thenReturn(Optional.of(cidade));
+            when(cidadeMapper.toDto(cidade)).thenReturn(gerarCidadeDto(cidade));
 
             // Act
             var cidadeRecebido = cidadeService.buscarPorId(cidade.getId());
 
             // Assert
-            verify(cidadeRepository, times(1)).findById(cidade.getId());
             assertThat(cidadeRecebido)
                     .usingRecursiveComparison()
                     .ignoringFields("estadoId")
                     .isEqualTo(cidade);
+
             assertThat(cidadeRecebido.estadoId()).isEqualTo(cidade.getEstado().getId());
+
+            verify(cidadeRepository).findById(cidade.getId());
         }
 
+        @DisplayName("Deve lançar exceção ao buscar cidade com ID inexistente")
         @Test
         void deveGerarExcecao_QuandoBuscarCidade_PorIdInexistente() {
             // Arrange
-            when(cidadeRepository.findById(anyLong()))
-                    .thenReturn(Optional.empty());
+            when(cidadeRepository.findById(cidade.getId())).thenReturn(Optional.empty());
 
             // Act & Assert
             assertThatThrownBy(() -> cidadeService.buscarPorId(cidade.getId()))
                     .isInstanceOf(RecursoNaoEncontradoException.class)
                     .hasMessage("Cidade não encontrado com id: " + cidade.getId());
 
-            verify(cidadeRepository, times(1)).findById(cidade.getId());
+            verify(cidadeRepository).findById(cidade.getId());
         }
 
+        @DisplayName("Deve retornar uma lista de cidades salvos")
         @Test
         void deveBuscarTodosOsCidade() {
             // Arrange
@@ -106,8 +108,7 @@ class CidadeServiceTest {
                     .map(CidadeHelper::gerarCidadeDto)
                     .toList();
 
-            when(cidadeRepository.findAll())
-                    .thenReturn(cidades);
+            when(cidadeRepository.findAll()).thenReturn(cidades);
             when(cidadeMapper.toDto(any(Cidade.class)))
                     .thenAnswer(invocation -> {
                         cidade = invocation.getArgument(0);
@@ -123,23 +124,25 @@ class CidadeServiceTest {
                     .isNotEmpty()
                     .hasSize(3)
                     .containsExactlyElementsOf(cidadesDto);
-            verify(cidadeRepository, times(1)).findAll();
+            verify(cidadeRepository).findAll();
             verify(cidadeMapper, times(3)).toDto(any(Cidade.class));
         }
     }
 
+    @DisplayName("Cadastrar Cidade")
     @Nested
     class CadastrarCidade {
 
+        @DisplayName("Deve cadastrar cidade")
         @Test
         void deveCadastrarCidade() {
             // Arrange
             when(cidadeMapper.toEntity(cidadeDTO)).thenReturn(cidade);
             when(cidadeMapper.toDto(cidade)).thenReturn(cidadeDTO);
-            when(cidadeRepository.findByNomeAndEstado_Id(anyString(), anyLong())).thenReturn(Optional.empty());
             when(cidadeRepository.save(cidade)).thenReturn(cidade);
-
-            when((estadoService.buscarPorId(anyLong()))).thenReturn(estadoDTO);
+            when(estadoService.buscarPorId(cidade.getEstado().getId())).thenReturn(estadoDTO);
+            when(cidadeRepository.findByNomeAndEstado_Id(cidade.getNome(), cidade.getEstado().getId()))
+                    .thenReturn(Optional.empty());
 
             // Act
             var cidadeSalvo = cidadeService.salvar(cidadeDTO);
@@ -149,28 +152,48 @@ class CidadeServiceTest {
                     .isNotNull()
                     .isInstanceOf(CidadeDTO.class)
                     .isEqualTo(cidadeDTO);
-            verify(cidadeRepository, times(1))
-                    .findByNomeAndEstado_Id(cidade.getNome(), cidade.getEstado().getId());
-            verify(cidadeRepository, times(1)).save(cidade);
-            verify(cidadeMapper, times(1)).toDto(cidade);
-            verify(cidadeMapper, times(1)).toEntity(cidadeDTO);
+            verify(cidadeRepository).findByNomeAndEstado_Id(cidade.getNome(), cidade.getEstado().getId());
+            verify(cidadeRepository).save(cidade);
+            verify(cidadeMapper).toDto(cidade);
+            verify(cidadeMapper).toEntity(cidadeDTO);
         }
 
+        @DisplayName("Deve lançar exceção ao tentar salvar cidade com estado e nome já existentes")
         @Test
-        void deveGerarExcecao_QuandoCadastrarCidade_ComNomeOuSiglaExistente() {
+        void deveGerarExcecao_QuandoCadastrarCidade_ComNomeEEstadoExistente() {
             // Arrange
-            when(cidadeRepository.findByNomeAndEstado_Id(anyString(), anyLong())).thenReturn(Optional.of(cidade));
+            when(cidadeRepository.findByNomeAndEstado_Id(cidade.getNome(), cidade.getEstado().getId()))
+                    .thenReturn(Optional.of(cidade));
 
             // Act & Assert
             assertThatThrownBy(() -> cidadeService.salvar(cidadeDTO))
                     .isInstanceOf(RecursoJaSalvoException.class)
                     .hasMessage("Uma cidade com nome '" + cidade.getNome() +
                             "' do estado '" + cidade.getEstado().getNome() + "' já existe no banco de dados.");
-            verify(cidadeRepository, times(1))
-                    .findByNomeAndEstado_Id(cidade.getNome(), cidade.getEstado().getId());
+
+            verify(cidadeRepository).findByNomeAndEstado_Id(cidade.getNome(), cidade.getEstado().getId());
+        }
+
+        @DisplayName("Deve lançar exceção ao tentar salvar cidade com estado inexistente")
+        @Test
+        void deveGerarExcecao_QuandoCadastrarCidade_ComEstadoInexistente() {
+            // Arrange
+            when(estadoService.buscarPorId(cidadeDTO.estadoId()))
+                    .thenThrow(new RecursoNaoEncontradoException("Estado não encontrada com id: " +
+                            cidadeDTO.estadoId()));
+
+            // Act & Assert
+            assertThatThrownBy(() -> cidadeService.salvar(cidadeDTO))
+                    .isInstanceOf(RecursoNaoEncontradoException.class)
+                    .hasMessage("Estado não encontrada com id: " +
+                            cidadeDTO.estadoId());
+
+            verify(estadoService).buscarPorId(cidadeDTO.estadoId());
+            verifyNoInteractions(cidadeRepository);
         }
     }
 
+    @DisplayName("Deve alterar cidade cadastrada")
     @Nested
     class AlterarCidade {
         @Test
@@ -179,10 +202,11 @@ class CidadeServiceTest {
             when(cidadeMapper.toEntity(cidadeDTO)).thenReturn(cidade);
             when(cidadeMapper.toDto(cidade)).thenReturn(cidadeDTO);
             doNothing().when(cidadeMapper).updateFromDto(cidadeDTO, cidade);
-            when(cidadeRepository.findByNomeAndEstado_IdAndNotId(anyString(), anyLong(), anyLong()))
+            when(cidadeRepository.findByNomeAndEstado_IdAndNotId(
+                    cidade.getNome(), cidade.getEstado().getId(), cidade.getId()))
                     .thenReturn(Optional.empty());
             when(cidadeRepository.save(cidade)).thenReturn(cidade);
-            when(cidadeRepository.findById(anyLong())).thenReturn(Optional.of(cidade));
+            when(cidadeRepository.findById(cidade.getId())).thenReturn(Optional.of(cidade));
 
             // Act
             var cidadeSalvo = cidadeService.atualizar(cidadeDTO.id(), cidadeDTO);
@@ -192,35 +216,38 @@ class CidadeServiceTest {
                     .isNotNull()
                     .isInstanceOf(CidadeDTO.class)
                     .isEqualTo(cidadeDTO);
-            verify(cidadeRepository, times(1))
-                    .findByNomeAndEstado_IdAndNotId(cidadeDTO.nome(), cidadeDTO.estadoId(), cidadeDTO.id());
-            verify(cidadeRepository, times(1)).findById(cidadeDTO.id());
-            verify(cidadeRepository, times(1)).save(cidade);
+            verify(cidadeRepository).findByNomeAndEstado_IdAndNotId(cidadeDTO.nome(),
+                    cidadeDTO.estadoId(), cidadeDTO.id());
+            verify(cidadeRepository).findById(cidadeDTO.id());
+            verify(cidadeRepository).save(cidade);
             verify(cidadeMapper, times(2)).toDto(cidade);
-            verify(cidadeMapper, times(1)).updateFromDto(cidadeDTO, cidade);
-            verify(cidadeMapper, times(1)).toEntity(cidadeDTO);
+            verify(cidadeMapper).updateFromDto(cidadeDTO, cidade);
+            verify(cidadeMapper).toEntity(cidadeDTO);
         }
 
+        @DisplayName("Deve lançar exceção ao tentar alterar cidade com id inexistente")
         @Test
-        void deveGerarExcecao_QuandoTentarAlterarCidade_PorIdInexistente() {
+        void deveGerarExcecao_QuandoAlterarCidade_PorIdInexistente() {
             // Arrange
-            when(cidadeRepository.findById(anyLong())).thenReturn(Optional.empty());
+            when(cidadeRepository.findById(cidade.getId())).thenReturn(Optional.empty());
             // Act & Assert
             assertThatThrownBy(() -> cidadeService.atualizar(cidadeDTO.id(), cidadeDTO))
                     .isInstanceOf(RecursoNaoEncontradoException.class)
                     .hasMessage("Cidade não encontrado com id: " + cidade.getId());
 
-            verify(cidadeRepository, times(1)).findById(cidadeDTO.id());
+            verify(cidadeRepository).findById(cidadeDTO.id());
             verifyNoMoreInteractions(cidadeRepository);
         }
 
+        @DisplayName("Deve lançar exceção ao tentar alterar cidade por cidade existente")
         @Test
-        void deveGerarExcecao_QuandoTentarAlterarCidade_PorCidadeExistente() {
+        void deveGerarExcecao_QuandoAlterarCidade_PorCidadeExistente() {
             // Arrange
             when(cidadeMapper.toEntity(cidadeDTO)).thenReturn(cidade);
             when(cidadeMapper.toDto(cidade)).thenReturn(cidadeDTO);
-            when(cidadeRepository.findById(anyLong())).thenReturn(Optional.of(cidade));
-            when(cidadeRepository.findByNomeAndEstado_IdAndNotId(anyString(), anyLong(), anyLong()))
+            when(cidadeRepository.findById(cidade.getId())).thenReturn(Optional.of(cidade));
+            when(cidadeRepository.findByNomeAndEstado_IdAndNotId(cidade.getNome(),
+                    cidade.getEstado().getId(), cidade.getId()))
                     .thenReturn(Optional.of(cidade));
 
             // Act & Assert
@@ -229,20 +256,21 @@ class CidadeServiceTest {
                     .hasMessage("Uma cidade com nome '" + cidade.getNome() +
                             "' do estado '" + cidade.getEstado().getNome() + "' já existe no banco de dados.");
 
-            verify(cidadeRepository, times(1))
-                    .findByNomeAndEstado_IdAndNotId(cidade.getNome(), cidade.getEstado().getId(), cidade.getId());
-            verify(cidadeRepository, times(1)).findById(cidadeDTO.id());
-            verifyNoMoreInteractions(cidadeRepository);
+            verify(cidadeRepository).findByNomeAndEstado_IdAndNotId(cidade.getNome(),
+                    cidade.getEstado().getId(), cidade.getId());
+            verify(cidadeRepository).findById(cidadeDTO.id());
         }
     }
 
+    @DisplayName("Deletar Cidade")
     @Nested
     class DeletarCidade {
 
+        @DisplayName("Deve deletar cidade")
         @Test
         void deveDeletarCidadePorId() {
             // Arrange
-            when(cidadeRepository.findById(anyLong()))
+            when(cidadeRepository.findById(cidade.getId()))
                     .thenReturn(Optional.of(cidade));
             doNothing().when(cidadeRepository).deleteById(cidade.getId());
 
@@ -250,21 +278,22 @@ class CidadeServiceTest {
             cidadeService.deletarPorId(cidade.getId());
 
             // Assert
-            verify(cidadeRepository, times(1)).findById(cidade.getId());
-            verify(cidadeRepository, times(1)).deleteById(cidade.getId());
+            verify(cidadeRepository).findById(cidade.getId());
+            verify(cidadeRepository).deleteById(cidade.getId());
         }
 
+        @DisplayName("Deve lançar exceção ao tentar deletar cidade por id inexistente")
         @Test
-        void deveGerarExcecao_QuandoTentarDeletarCidade_PorIdInexistente() {
+        void deveGerarExcecao_QuandoDeletarCidade_PorIdInexistente() {
             // Arrange
-            when(cidadeRepository.findById(anyLong()))
-                    .thenReturn(Optional.empty());
+            when(cidadeRepository.findById(cidade.getId())).thenReturn(Optional.empty());
 
             // Act & Assert
             assertThatThrownBy(() -> cidadeService.deletarPorId(cidade.getId()))
                     .isInstanceOf(RecursoNaoEncontradoException.class)
                     .hasMessage("Cidade não encontrado com id: " + cidade.getId());
-            verify(cidadeRepository, times(1)).findById(cidade.getId());
+
+            verify(cidadeRepository).findById(cidade.getId());
         }
     }
 }

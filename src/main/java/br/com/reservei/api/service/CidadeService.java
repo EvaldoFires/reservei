@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface CidadeService {
 
-    public CidadeDTO buscarPorId(Long id);
-    public List<CidadeDTO> buscarTodos();
-    public CidadeDTO salvar(CidadeDTO cidadeDto);
-    public CidadeDTO atualizar(Long id, CidadeDTO cidadeDto);
-    public void deletarPorId(Long id);
+    CidadeDTO buscarPorId(Long id);
+    List<CidadeDTO> buscarTodos();
+    CidadeDTO salvar(CidadeDTO cidadeDto);
+    CidadeDTO atualizar(Long id, CidadeDTO cidadeDto);
+    void deletarPorId(Long id);
 }

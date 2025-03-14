@@ -9,6 +9,7 @@ import br.com.reservei.api.repository.EstadoRepository;
 import br.com.reservei.api.service.impl.EstadoServiceImpl;
 import br.com.reservei.api.utils.EstadoHelper;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -46,40 +47,42 @@ class EstadoServiceTest {
         this.estadoDTO = gerarEstadoDto(estado);
     }
 
+    @DisplayName("Buscar Estado")
     @Nested
     class BuscarEstado {
+
+        @DisplayName("Deve buscar um Estado pelo ID fornecido")
         @Test
         void deveBuscarEstadoPorId() {
             // Arrange
-            when(estadoRepository.findById(anyLong()))
-                    .thenReturn(Optional.of(estado));
-            when(estadoMapper.toDto(any()))
-                    .thenReturn(gerarEstadoDto(estado));
+            when(estadoRepository.findById(estado.getId())).thenReturn(Optional.of(estado));
+            when(estadoMapper.toDto(estado)).thenReturn(gerarEstadoDto(estado));
 
             // Act
             var estadoRecebido = estadoService.buscarPorId(estado.getId());
 
             // Assert
-            verify(estadoRepository, times(1)).findById(estado.getId());
+            verify(estadoRepository).findById(estado.getId());
             assertThat(estadoRecebido)
                     .usingRecursiveComparison()
                     .ignoringFields("cidades")
                     .isEqualTo(estado);
         }
 
+        @DisplayName("Deve lançar exceção ao buscar estado com ID inexistente")
         @Test
         void deveGerarExcecao_QuandoBuscarEstado_PorIdInexistente() {
             // Arrange
-            when(estadoRepository.findById(anyLong()))
-                    .thenReturn(Optional.empty());
+            when(estadoRepository.findById(estado.getId())).thenReturn(Optional.empty());
 
             // Act & Assert
             assertThatThrownBy(() -> estadoService.buscarPorId(estado.getId()))
                     .isInstanceOf(RecursoNaoEncontradoException.class)
                     .hasMessage("Estado não encontrado com id: " + estado.getId());
-            verify(estadoRepository, times(1)).findById(estado.getId());
+            verify(estadoRepository).findById(estado.getId());
         }
 
+        @DisplayName("Deve retornar uma lista de estados salvos")
         @Test
         void deveBuscarTodosOsEstado() {
             // Arrange
@@ -105,20 +108,23 @@ class EstadoServiceTest {
                     .isNotEmpty()
                     .hasSize(3)
                     .containsExactlyElementsOf(estadosDto);
-            verify(estadoRepository, times(1)).findAll();
+            verify(estadoRepository).findAll();
             verify(estadoMapper, times(3)).toDto(any(Estado.class));
         }
     }
 
+    @DisplayName("Cadastrar Estado")
     @Nested
     class CadastrarEstado {
 
+        @DisplayName("Deve cadastrar cidade")
         @Test
         void deveCadastrarEstado() {
             // Arrange
             when(estadoMapper.toEntity(estadoDTO)).thenReturn(estado);
             when(estadoMapper.toDto(estado)).thenReturn(estadoDTO);
-            when(estadoRepository.findByNomeOrSigla(anyString(), anyString())).thenReturn(Optional.empty());
+            when(estadoRepository.findByNomeOrSigla(estado.getNome(), estado.getSigla()))
+                    .thenReturn(Optional.empty());
             when(estadoRepository.save(estado)).thenReturn(estado);
 
             // Act
@@ -129,37 +135,43 @@ class EstadoServiceTest {
                     .isNotNull()
                     .isInstanceOf(EstadoDTO.class)
                     .isEqualTo(estadoDTO);
-            verify(estadoRepository, times(1)).findByNomeOrSigla(estado.getNome(), estado.getSigla());
-            verify(estadoRepository, times(1)).save(estado);
-            verify(estadoMapper, times(1)).toDto(estado);
-            verify(estadoMapper, times(1)).toEntity(estadoDTO);
+            verify(estadoRepository).findByNomeOrSigla(estado.getNome(), estado.getSigla());
+            verify(estadoRepository).save(estado);
+            verify(estadoMapper).toDto(estado);
+            verify(estadoMapper).toEntity(estadoDTO);
         }
 
+        @DisplayName("Deve lançar exceção ao tentar salvar estado com sigla ou nome já existente")
         @Test
         void deveGerarExcecao_QuandoCadastrarEstado_ComNomeOuSiglaExistente() {
             // Arrange
-            when(estadoRepository.findByNomeOrSigla(anyString(), anyString())).thenReturn(Optional.of(estado));
+            when(estadoRepository.findByNomeOrSigla(estado.getNome(), estado.getSigla()))
+                    .thenReturn(Optional.of(estado));
 
             // Act & Assert
             assertThatThrownBy(() -> estadoService.salvar(estadoDTO))
                     .isInstanceOf(RecursoJaSalvoException.class)
                     .hasMessage("Um estado com sigla '" + estadoDTO.sigla() +
                             "' ou nome '" + estadoDTO.nome() + "' já existe no banco de dados.");
-            verify(estadoRepository, times(1)).findByNomeOrSigla(estado.getNome(), estado.getSigla());
+            verify(estadoRepository).findByNomeOrSigla(estado.getNome(), estado.getSigla());
         }
     }
+
+    @DisplayName("Alterar Estado")
     @Nested
     class AlterarEstado{
+
+        @DisplayName("Deve alterar estado cadastrada")
         @Test
         void deveAlterarEstadoPorId() {
             // Arrange
             when(estadoMapper.toEntity(estadoDTO)).thenReturn(estado);
             when(estadoMapper.toDto(estado)).thenReturn(estadoDTO);
             doNothing().when(estadoMapper).updateFromDto(estadoDTO, estado);
-            when(estadoRepository.findByNomeOrSiglaAndIdNot(anyString(), anyString(), anyLong()))
+            when(estadoRepository.findByNomeOrSiglaAndIdNot(estado.getNome(), estado.getSigla(), estado.getId()))
                     .thenReturn(Optional.empty());
             when(estadoRepository.save(estado)).thenReturn(estado);
-            when(estadoRepository.findById(anyLong())).thenReturn(Optional.of(estado));
+            when(estadoRepository.findById(estado.getId())).thenReturn(Optional.of(estado));
 
             // Act
             var estadoSalvo = estadoService.atualizar(estadoDTO.id(), estadoDTO);
@@ -169,35 +181,36 @@ class EstadoServiceTest {
                     .isNotNull()
                     .isInstanceOf(EstadoDTO.class)
                     .isEqualTo(estadoDTO);
-            verify(estadoRepository, times(1))
+            verify(estadoRepository)
                     .findByNomeOrSiglaAndIdNot(estadoDTO.nome(), estadoDTO.sigla(), estadoDTO.id());
-            verify(estadoRepository, times(1)).findById(estadoDTO.id());
-            verify(estadoRepository, times(1)).save(estado);
+            verify(estadoRepository).findById(estadoDTO.id());
+            verify(estadoRepository).save(estado);
+            verify(estadoMapper).updateFromDto(estadoDTO, estado);
+            verify(estadoMapper).toEntity(estadoDTO);
             verify(estadoMapper, times(2)).toDto(estado);
-            verify(estadoMapper, times(1)).updateFromDto(estadoDTO, estado);
-            verify(estadoMapper, times(1)).toEntity(estadoDTO);
         }
 
+        @DisplayName("Deve lançar exceção ao tentar alterar estado com id inexistente")
         @Test
-        void deveGerarExcecao_QuandoTentarAlterarEstado_PorIdInexistente() {
+        void deveGerarExcecao_QuandoAlterarEstado_PorIdInexistente() {
             // Arrange
-            when(estadoRepository.findById(anyLong())).thenReturn(Optional.empty());
+            when(estadoRepository.findById(estado.getId())).thenReturn(Optional.empty());
             // Act & Assert
             assertThatThrownBy(() -> estadoService.atualizar(estadoDTO.id(), estadoDTO))
                     .isInstanceOf(RecursoNaoEncontradoException.class)
                     .hasMessage("Estado não encontrado com id: " + estado.getId());
 
-            verify(estadoRepository, times(1)).findById(estadoDTO.id());
-            verifyNoMoreInteractions(estadoRepository);
+            verify(estadoRepository).findById(estadoDTO.id());
         }
 
+        @DisplayName("Deve lançar exceção ao tentar alterar estado por estado existente")
         @Test
-        void deveGerarExcecao_QuandoTentarAlterarEstado_PorEstadoExistente() {
+        void deveGerarExcecao_QuandoAlterarEstado_PorEstadoExistente() {
             // Arrange
             when(estadoMapper.toEntity(estadoDTO)).thenReturn(estado);
             when(estadoMapper.toDto(estado)).thenReturn(estadoDTO);
-            when(estadoRepository.findById(anyLong())).thenReturn(Optional.of(estado));
-            when(estadoRepository.findByNomeOrSiglaAndIdNot(anyString(), anyString(), anyLong()))
+            when(estadoRepository.findById(estado.getId())).thenReturn(Optional.of(estado));
+            when(estadoRepository.findByNomeOrSiglaAndIdNot(estado.getNome(), estado.getSigla(), estado.getId()))
                     .thenReturn(Optional.of(estado));
 
             // Act & Assert
@@ -206,20 +219,22 @@ class EstadoServiceTest {
                     .hasMessage("Um estado com sigla '" + estadoDTO.sigla() +
                             "' ou nome '" + estadoDTO.nome() + "' já existe no banco de dados.");
 
-            verify(estadoRepository, times(1))
+            verify(estadoRepository)
                     .findByNomeOrSiglaAndIdNot(estado.getNome(), estado.getSigla(), estado.getId());
-            verify(estadoRepository, times(1)).findById(estadoDTO.id());
+            verify(estadoRepository).findById(estadoDTO.id());
             verifyNoMoreInteractions(estadoRepository);
         }
     }
 
+    @DisplayName("Deletar Estado")
     @Nested
     class DeletarEstado{
 
+        @DisplayName("Deve deletar estado")
         @Test
         void deveDeletarEstadoPorId(){
             // Arrange
-            when(estadoRepository.findById(anyLong()))
+            when(estadoRepository.findById(estado.getId()))
                     .thenReturn(Optional.of(estado));
             doNothing().when(estadoRepository).deleteById(estado.getId());
 
@@ -227,21 +242,22 @@ class EstadoServiceTest {
             estadoService.deletarPorId(estado.getId());
 
             // Assert
-            verify(estadoRepository, times(1)).findById(estado.getId());
-            verify(estadoRepository, times(1)).deleteById(estado.getId());
+            verify(estadoRepository).findById(estado.getId());
+            verify(estadoRepository).deleteById(estado.getId());
         }
 
+        @DisplayName("Deve lançar exceção ao tentar deletar estado por id inexistente")
         @Test
-        void deveGerarExcecao_QuandoTentarDeletarEstado_PorIdInexistente(){
+        void deveGerarExcecao_QuandoDeletarEstado_PorIdInexistente(){
             // Arrange
-            when(estadoRepository.findById(anyLong()))
-                    .thenReturn(Optional.empty());
+            when(estadoRepository.findById(estado.getId())).thenReturn(Optional.empty());
 
             // Act & Assert
             assertThatThrownBy(() -> estadoService.deletarPorId(estado.getId()))
                     .isInstanceOf(RecursoNaoEncontradoException.class)
                     .hasMessage("Estado não encontrado com id: " + estado.getId());
-            verify(estadoRepository, times(1)).findById(estado.getId());
+
+            verify(estadoRepository).findById(estado.getId());
         }
     }
 }

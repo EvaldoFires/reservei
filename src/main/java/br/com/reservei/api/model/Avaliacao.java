@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Data
@@ -22,15 +21,15 @@ public class Avaliacao {
 
     private int nota;
     private String comentario;
+
+    @Column(nullable = false, updatable = false)
     private LocalDateTime dataCriacao;
 
     @ManyToOne
     private Restaurante restaurante;
 
-    public Avaliacao(int nota, String comentario, Restaurante restaurante) {
-        this.nota = nota;
-        this.comentario = comentario;
-        this.restaurante = restaurante;
+    @PrePersist
+    protected void prePersist() {
         this.dataCriacao = LocalDateTime.now();
     }
 }

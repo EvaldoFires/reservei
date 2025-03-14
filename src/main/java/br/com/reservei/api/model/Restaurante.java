@@ -23,7 +23,7 @@ public class Restaurante {
     private Cozinha cozinha;
     @OneToOne
     private Endereco endereco;
-    private int numeroReservasPorHora;
+    private int reservasPorHora;
     private LocalTime inicioExpediente;
     private LocalTime finalExpediente;
 }

@@ -1,5 +1,6 @@
 package br.com.reservei.api.utils;
 
+import br.com.reservei.api.dto.EnderecoDTO;
 import br.com.reservei.api.model.Endereco;
 import br.com.reservei.api.repository.CidadeRepository;
 import br.com.reservei.api.repository.EnderecoRepository;
@@ -20,6 +21,14 @@ public class EnderecoHelper {
                 .rua("Ibiassucê")
                 .numero("614")
                 .build();
+    }
+
+    public static EnderecoDTO gerarEnderecoDto(Endereco endereco){
+        return new EnderecoDTO(endereco.getId(),
+                endereco.getCidade().getId(),
+                endereco.getBairro(),
+                endereco.getRua(),
+                endereco.getNumero());
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
