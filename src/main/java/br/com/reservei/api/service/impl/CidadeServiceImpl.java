@@ -27,7 +27,7 @@ public class CidadeServiceImpl implements CidadeService {
     @Override
     public CidadeDTO buscarPorId(Long id){
         Cidade cidade = cidadeRepository.findById(id).orElseThrow(()->
-                new RecursoNaoEncontradoException("Cidade não encontrado com id: " + id)
+                new RecursoNaoEncontradoException("Cidade não encontrada com id: " + id)
         );
         return cidadeMapper.toDto(cidade);
     }
@@ -69,9 +69,7 @@ public class CidadeServiceImpl implements CidadeService {
 
     @Override
     public void deletarPorId(Long id) {
-        buscarPorId(id);
+        this.buscarPorId(id);
         cidadeRepository.deleteById(id);
-
-
     }
 }

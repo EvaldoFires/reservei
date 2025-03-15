@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 public record ReservaDTO(
         @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         Long id,
-        @NotNull(message = "O horario de reserva não pode ser nulo")
-        LocalDateTime horaDaReserva,
         @NotBlank(message = "O id do restaurante é obrigatório.")
-        long restauranteId
+        long restauranteId,
+        @NotNull(message = "O horario de reserva não pode ser nulo")
+        LocalDateTime horaDaReserva
 ) {
 }

@@ -54,11 +54,11 @@ class EnderecoServiceTest {
         this.cidadeDTO = gerarCidadeDto(gerarCidade());
     }
 
-    @DisplayName("Buscar Endereco")
+    @DisplayName("Buscar Endereço")
     @Nested
     class BuscarEndereco {
 
-        @DisplayName("Deve buscar um Endereco pelo ID fornecido")
+        @DisplayName("Deve buscar um Endereço pelo ID fornecido")
         @Test
         void deveBuscarEnderecoPorId() {
             // Arrange
@@ -69,14 +69,18 @@ class EnderecoServiceTest {
             var enderecoRecebido = enderecoService.buscarPorId(endereco.getId());
 
             // Assert
-            verify(enderecoRepository).findById(endereco.getId());
             assertThat(enderecoRecebido)
                     .usingRecursiveComparison()
                     .ignoringFields("cidadeId")
                     .isEqualTo(endereco);
+
+            assertThat(enderecoRecebido.cidadeId()).isEqualTo(endereco.getCidade().getId());
+
+            verify(enderecoMapper).toDto(endereco);
+            verify(enderecoRepository).findById(endereco.getId());
         }
 
-        @DisplayName("Deve lançar exceção ao buscar endereco com ID inexistente")
+        @DisplayName("Deve lançar exceção ao buscar Endereço com ID inexistente")
         @Test
         void deveGerarExcecao_QuandoBuscarEndereco_PorIdInexistente() {
             // Arrange
@@ -85,21 +89,20 @@ class EnderecoServiceTest {
             // Act & Assert
             assertThatThrownBy(() -> enderecoService.buscarPorId(endereco.getId()))
                     .isInstanceOf(RecursoNaoEncontradoException.class)
-                    .hasMessage("Endereco não encontrado com id: " + endereco.getId());
+                    .hasMessage("Endereço não encontrado com id: " + endereco.getId());
             verify(enderecoRepository).findById(endereco.getId());
         }
 
-        @DisplayName("Deve retornar uma lista de enderecos salvos")
+        @DisplayName("Deve retornar uma lista de endereços salvos")
         @Test
-        void deveBuscarTodosOsEndereco() {
+        void deveBuscarTodosOsEnderecos() {
             // Arrange
             var enderecos = List.of(gerarEndereco(), gerarEndereco(), gerarEndereco());
             var enderecosDto = enderecos.stream()
                     .map(EnderecoHelper::gerarEnderecoDto)
                     .toList();
 
-            when(enderecoRepository.findAll())
-                    .thenReturn(enderecos);
+            when(enderecoRepository.findAll()).thenReturn(enderecos);
             when(enderecoMapper.toDto(any(Endereco.class)))
                     .thenAnswer(invocation -> {
                         endereco = invocation.getArgument(0);
@@ -120,11 +123,11 @@ class EnderecoServiceTest {
         }
     }
 
-    @DisplayName("Cadastrar Endereco")
+    @DisplayName("Cadastrar Endereço")
     @Nested
     class CadastrarEndereco {
 
-        @DisplayName("Deve cadastrar cidade")
+        @DisplayName("Deve cadastrar Endereço")
         @Test
         void deveCadastrarEndereco() {
             // Arrange
@@ -148,7 +151,7 @@ class EnderecoServiceTest {
             verify(enderecoMapper).toEntity(enderecoDTO);
         }
 
-        @DisplayName("Deve lançar exceção ao tentar salvar endereco com cidade inexistente")
+        @DisplayName("Deve lançar exceção ao tentar salvar endereço com cidade inexistente")
         @Test
         void deveGerarExcecao_QuandoCadastrarEndereco_ComCidadeInexistente() {
             // Arrange
@@ -166,11 +169,11 @@ class EnderecoServiceTest {
         }
     }
 
-    @DisplayName("Alterar Endereco")
+    @DisplayName("Alterar Endereço")
     @Nested
     class AlterarEndereco{
 
-        @DisplayName("Deve alterar endereco cadastrada")
+        @DisplayName("Deve alterar Endereço cadastrada")
         @Test
         void deveAlterarEnderecoPorId() {
             // Arrange
@@ -197,7 +200,7 @@ class EnderecoServiceTest {
             verify(enderecoMapper, times(2)).toDto(endereco);
         }
 
-        @DisplayName("Deve lançar exceção ao tentar alterar endereco com id inexistente")
+        @DisplayName("Deve lançar exceção ao tentar alterar Endereço com id inexistente")
         @Test
         void deveGerarExcecao_QuandoTentarAlterarEndereco_PorIdInexistente() {
             // Arrange
@@ -206,13 +209,13 @@ class EnderecoServiceTest {
             // Act & Assert
             assertThatThrownBy(() -> enderecoService.atualizar(enderecoDTO.id(), enderecoDTO))
                     .isInstanceOf(RecursoNaoEncontradoException.class)
-                    .hasMessage("Endereco não encontrado com id: " + endereco.getId());
+                    .hasMessage("Endereço não encontrado com id: " + endereco.getId());
 
             verify(enderecoRepository).findById(enderecoDTO.id());
             verifyNoMoreInteractions(enderecoRepository);
         }
 
-        @DisplayName("Deve lançar exceção ao tentar alterar endereco com cidade inexistente")
+        @DisplayName("Deve lançar exceção ao tentar alterar Endereço com cidade inexistente")
         @Test
         void deveGerarExcecao_QuandoAlterarEndereco_ComCidadeInexistente() {
             // Arrange
@@ -234,11 +237,11 @@ class EnderecoServiceTest {
 
     }
 
-    @DisplayName("Deletar Endereco")
+    @DisplayName("Deletar Endereço")
     @Nested
     class DeletarEndereco{
 
-        @DisplayName("Deve deletar endereco")
+        @DisplayName("Deve deletar Endereço")
         @Test
         void deveDeletarEnderecoPorId(){
             // Arrange
@@ -254,7 +257,7 @@ class EnderecoServiceTest {
             verify(enderecoRepository).deleteById(endereco.getId());
         }
 
-        @DisplayName("Deve lançar exceção ao tentar deletar endereco por id inexistente")
+        @DisplayName("Deve lançar exceção ao tentar deletar Endereço por id inexistente")
         @Test
         void deveGerarExcecao_QuandoTentarDeletarEndereco_PorIdInexistente(){
             // Arrange
@@ -263,7 +266,7 @@ class EnderecoServiceTest {
             // Act & Assert
             assertThatThrownBy(() -> enderecoService.deletarPorId(endereco.getId()))
                     .isInstanceOf(RecursoNaoEncontradoException.class)
-                    .hasMessage("Endereco não encontrado com id: " + endereco.getId());
+                    .hasMessage("Endereço não encontrado com id: " + endereco.getId());
 
             verify(enderecoRepository).findById(endereco.getId());
         }

@@ -24,7 +24,7 @@ public class EnderecoServiceImpl implements EnderecoService {
     @Override
     public EnderecoDTO buscarPorId(Long id){
         Endereco endereco = enderecoRepository.findById(id).orElseThrow(()->
-                new RecursoNaoEncontradoException("Endereco não encontrado com id: " + id)
+                new RecursoNaoEncontradoException("Endereço não encontrado com id: " + id)
         );
         return enderecoMapper.toDto(endereco);
     }

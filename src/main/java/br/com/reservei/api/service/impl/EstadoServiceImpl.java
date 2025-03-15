@@ -62,9 +62,7 @@ public class EstadoServiceImpl implements EstadoService {
 
     @Override
     public void deletarPorId(Long id) {
-        buscarPorId(id);
+        this.buscarPorId(id);
         estadoRepository.deleteById(id);
-
-
     }
 }

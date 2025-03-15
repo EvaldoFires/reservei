@@ -62,14 +62,16 @@ class EstadoServiceTest {
             var estadoRecebido = estadoService.buscarPorId(estado.getId());
 
             // Assert
-            verify(estadoRepository).findById(estado.getId());
             assertThat(estadoRecebido)
                     .usingRecursiveComparison()
                     .ignoringFields("cidades")
                     .isEqualTo(estado);
+
+            verify(estadoMapper).toDto(estado);
+            verify(estadoRepository).findById(estado.getId());
         }
 
-        @DisplayName("Deve lançar exceção ao buscar estado com ID inexistente")
+        @DisplayName("Deve lançar exceção ao buscar Estado com ID inexistente")
         @Test
         void deveGerarExcecao_QuandoBuscarEstado_PorIdInexistente() {
             // Arrange
@@ -91,8 +93,7 @@ class EstadoServiceTest {
                     .map(EstadoHelper::gerarEstadoDto)
                     .toList();
 
-            when(estadoRepository.findAll())
-                    .thenReturn(estados);
+            when(estadoRepository.findAll()).thenReturn(estados);
             when(estadoMapper.toDto(any(Estado.class)))
                     .thenAnswer(invocation -> {
                         estado = invocation.getArgument(0);
@@ -117,7 +118,7 @@ class EstadoServiceTest {
     @Nested
     class CadastrarEstado {
 
-        @DisplayName("Deve cadastrar cidade")
+        @DisplayName("Deve cadastrar Estado")
         @Test
         void deveCadastrarEstado() {
             // Arrange
@@ -141,7 +142,7 @@ class EstadoServiceTest {
             verify(estadoMapper).toEntity(estadoDTO);
         }
 
-        @DisplayName("Deve lançar exceção ao tentar salvar estado com sigla ou nome já existente")
+        @DisplayName("Deve lançar exceção ao tentar salvar Estado com sigla ou nome já existente")
         @Test
         void deveGerarExcecao_QuandoCadastrarEstado_ComNomeOuSiglaExistente() {
             // Arrange
@@ -161,7 +162,7 @@ class EstadoServiceTest {
     @Nested
     class AlterarEstado{
 
-        @DisplayName("Deve alterar estado cadastrada")
+        @DisplayName("Deve alterar Estado cadastrada")
         @Test
         void deveAlterarEstadoPorId() {
             // Arrange
@@ -190,7 +191,7 @@ class EstadoServiceTest {
             verify(estadoMapper, times(2)).toDto(estado);
         }
 
-        @DisplayName("Deve lançar exceção ao tentar alterar estado com id inexistente")
+        @DisplayName("Deve lançar exceção ao tentar alterar Estado com id inexistente")
         @Test
         void deveGerarExcecao_QuandoAlterarEstado_PorIdInexistente() {
             // Arrange
@@ -203,7 +204,7 @@ class EstadoServiceTest {
             verify(estadoRepository).findById(estadoDTO.id());
         }
 
-        @DisplayName("Deve lançar exceção ao tentar alterar estado por estado existente")
+        @DisplayName("Deve lançar exceção ao tentar alterar Estado por Estado existente")
         @Test
         void deveGerarExcecao_QuandoAlterarEstado_PorEstadoExistente() {
             // Arrange
@@ -230,7 +231,7 @@ class EstadoServiceTest {
     @Nested
     class DeletarEstado{
 
-        @DisplayName("Deve deletar estado")
+        @DisplayName("Deve deletar Estado")
         @Test
         void deveDeletarEstadoPorId(){
             // Arrange
@@ -246,7 +247,7 @@ class EstadoServiceTest {
             verify(estadoRepository).deleteById(estado.getId());
         }
 
-        @DisplayName("Deve lançar exceção ao tentar deletar estado por id inexistente")
+        @DisplayName("Deve lançar exceção ao tentar deletar Estado por id inexistente")
         @Test
         void deveGerarExcecao_QuandoDeletarEstado_PorIdInexistente(){
             // Arrange

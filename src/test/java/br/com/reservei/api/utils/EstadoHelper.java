@@ -21,13 +21,13 @@ public class EstadoHelper {
                 .build();
     }
 
+    public static EstadoDTO gerarEstadoDto(Estado estado){
+        return new EstadoDTO(estado.getId(), estado.getNome(), estado.getSigla());
+    }
+
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public static Estado salvarEstado(EstadoRepository estadoRepository){
         var estado = gerarEstado();
         return estadoRepository.save(estado);
-    }
-
-    public static EstadoDTO gerarEstadoDto(Estado estado){
-        return new EstadoDTO(estado.getId(), estado.getNome(), estado.getSigla());
     }
 }
