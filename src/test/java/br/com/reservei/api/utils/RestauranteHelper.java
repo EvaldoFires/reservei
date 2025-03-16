@@ -1,11 +1,12 @@
 package br.com.reservei.api.utils;
 
-import br.com.reservei.api.dto.RestauranteDTO;
-import br.com.reservei.api.model.Restaurante;
-import br.com.reservei.api.repository.CidadeRepository;
-import br.com.reservei.api.repository.EnderecoRepository;
-import br.com.reservei.api.repository.EstadoRepository;
-import br.com.reservei.api.repository.RestauranteRepository;
+import br.com.reservei.api.application.dto.RestauranteDTO;
+import br.com.reservei.api.domain.model.Restaurante;
+import br.com.reservei.api.domain.repository.CidadeRepository;
+import br.com.reservei.api.domain.repository.EnderecoRepository;
+import br.com.reservei.api.domain.repository.EstadoRepository;
+import br.com.reservei.api.domain.repository.RestauranteRepository;
+import br.com.reservei.api.infrastructure.utils.Cozinha;
 
 import java.time.LocalTime;
 import java.util.UUID;

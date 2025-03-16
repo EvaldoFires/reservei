@@ -1,10 +1,10 @@
 package br.com.reservei.api.utils;
 
-import br.com.reservei.api.dto.EnderecoDTO;
-import br.com.reservei.api.model.Endereco;
-import br.com.reservei.api.repository.CidadeRepository;
-import br.com.reservei.api.repository.EnderecoRepository;
-import br.com.reservei.api.repository.EstadoRepository;
+import br.com.reservei.api.application.dto.EnderecoDTO;
+import br.com.reservei.api.domain.model.Endereco;
+import br.com.reservei.api.domain.repository.CidadeRepository;
+import br.com.reservei.api.domain.repository.EnderecoRepository;
+import br.com.reservei.api.domain.repository.EstadoRepository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 

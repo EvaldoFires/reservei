@@ -1,9 +1,8 @@
 package br.com.reservei.api.utils;
 
-import br.com.reservei.api.dto.AvaliacaoDTO;
-import br.com.reservei.api.model.Avaliacao;
+import br.com.reservei.api.application.dto.AvaliacaoDTO;
+import br.com.reservei.api.domain.model.Avaliacao;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static br.com.reservei.api.utils.RestauranteHelper.gerarRestaurante;

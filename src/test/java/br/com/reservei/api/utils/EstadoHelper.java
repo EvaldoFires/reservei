@@ -1,9 +1,9 @@
 package br.com.reservei.api.utils;
 
-import br.com.reservei.api.dto.EstadoDTO;
-import br.com.reservei.api.model.Cidade;
-import br.com.reservei.api.model.Estado;
-import br.com.reservei.api.repository.EstadoRepository;
+import br.com.reservei.api.application.dto.EstadoDTO;
+import br.com.reservei.api.domain.model.Cidade;
+import br.com.reservei.api.domain.model.Estado;
+import br.com.reservei.api.domain.repository.EstadoRepository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 

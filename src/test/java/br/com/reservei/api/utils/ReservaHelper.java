@@ -1,17 +1,12 @@
 package br.com.reservei.api.utils;
 
-import br.com.reservei.api.dto.ReservaDTO;
-import br.com.reservei.api.model.Reserva;
-import br.com.reservei.api.repository.ReservaRepository;
-import br.com.reservei.api.repository.RestauranteRepository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+import br.com.reservei.api.application.dto.ReservaDTO;
+import br.com.reservei.api.domain.model.Reserva;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static br.com.reservei.api.utils.RestauranteHelper.gerarRestaurante;
-import static br.com.reservei.api.utils.RestauranteHelper.salvarRestaurante;
 
 public class ReservaHelper {
     public static Reserva gerarReserva(){
