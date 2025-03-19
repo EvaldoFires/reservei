@@ -1,8 +1,10 @@
 package br.com.reservei.api.application.usecases.endereco;
 
 import br.com.reservei.api.application.dto.CidadeDTO;
+import br.com.reservei.api.application.dto.EstadoDTO;
 import br.com.reservei.api.domain.exceptions.RecursoJaSalvoException;
 import br.com.reservei.api.domain.exceptions.RecursoNaoEncontradoException;
+import br.com.reservei.api.domain.model.Estado;
 import br.com.reservei.api.interfaces.mapper.CidadeMapper;
 import br.com.reservei.api.domain.model.Cidade;
 import br.com.reservei.api.domain.repository.CidadeRepository;
@@ -38,11 +40,11 @@ public class CidadeServiceImpl implements CidadeService {
 
     @Override
     public CidadeDTO salvar(CidadeDTO cidadeDto) {
-        estadoService.buscarPorId(cidadeDto.estadoId());
+        EstadoDTO estadoDTO = estadoService.buscarPorId(cidadeDto.estadoId());
         cidadeRepository.findByNomeAndEstado_Id(cidadeDto.nome(), cidadeDto.estadoId())
                 .ifPresent(cidadePresente -> {
                     throw new RecursoJaSalvoException("Uma cidade com nome '" + cidadePresente.getNome() +
-                            "' do estado '" + cidadePresente.getEstado().getNome() + "' já existe no banco de dados.");
+                            "' do estado '" + estadoDTO.nome() + "' já existe no banco de dados.");
                 });
         Cidade cidade = cidadeMapper.toEntity(cidadeDto);
         cidade = cidadeRepository.save(cidade);
@@ -52,11 +54,11 @@ public class CidadeServiceImpl implements CidadeService {
     @Override
     public CidadeDTO atualizar(Long id, CidadeDTO cidadeDto) {
         Cidade cidade = cidadeMapper.toEntity(this.buscarPorId(id));
-        estadoService.buscarPorId(cidadeDto.estadoId());
-        cidadeRepository.findByNomeAndEstado_IdAndNotId(cidadeDto.nome(), cidadeDto.estadoId(), id)
+        EstadoDTO estadoDTO = estadoService.buscarPorId(cidadeDto.estadoId());
+        cidadeRepository.findByNomeAndEstado_IdAndIdNot(cidadeDto.nome(), cidadeDto.estadoId(), id)
                 .ifPresent(cidadePresente -> {
                     throw new RecursoJaSalvoException("Uma cidade com nome '" + cidadePresente.getNome() +
-                            "' do estado '" + cidadePresente.getEstado().getNome() + "' já existe no banco de dados.");
+                            "' do estado '" + estadoDTO.nome() + "' já existe no banco de dados.");
                 });
         cidadeMapper.updateFromDto(cidadeDto, cidade);
         cidade = cidadeRepository.save(cidade);

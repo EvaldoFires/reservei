@@ -1,4 +1,4 @@
-package br.com.reservei.api.usecases;
+package br.com.reservei.api.application.usecases.endereco;
 
 import br.com.reservei.api.application.dto.EstadoDTO;
 import br.com.reservei.api.domain.exceptions.RecursoJaSalvoException;
@@ -6,8 +6,7 @@ import br.com.reservei.api.domain.exceptions.RecursoNaoEncontradoException;
 import br.com.reservei.api.interfaces.mapper.EstadoMapper;
 import br.com.reservei.api.domain.model.Estado;
 import br.com.reservei.api.domain.repository.EstadoRepository;
-import br.com.reservei.api.application.usecases.endereco.EstadoServiceImpl;
-import br.com.reservei.api.utils.EstadoHelper;
+import br.com.reservei.api.infrastructure.utils.EstadoHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -20,8 +19,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
-import static br.com.reservei.api.utils.EstadoHelper.gerarEstado;
-import static br.com.reservei.api.utils.EstadoHelper.gerarEstadoDto;
+import static br.com.reservei.api.infrastructure.utils.EstadoHelper.gerarEstado;
+import static br.com.reservei.api.infrastructure.utils.EstadoHelper.gerarEstadoDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
@@ -118,9 +117,9 @@ class EstadoServiceTest {
     @Nested
     class CadastrarEstado {
 
-        @DisplayName("Deve cadastrar Estado")
+        @DisplayName("Deve salvar Estado")
         @Test
-        void deveCadastrarEstado() {
+        void deveSalvarEstado() {
             // Arrange
             when(estadoMapper.toEntity(estadoDTO)).thenReturn(estado);
             when(estadoMapper.toDto(estado)).thenReturn(estadoDTO);
@@ -144,7 +143,7 @@ class EstadoServiceTest {
 
         @DisplayName("Deve lançar exceção ao tentar salvar Estado com sigla ou nome já existente")
         @Test
-        void deveGerarExcecao_QuandoCadastrarEstado_ComNomeOuSiglaExistente() {
+        void deveGerarExcecao_QuandoSalvarEstado_ComNomeOuSiglaExistente() {
             // Arrange
             when(estadoRepository.findByNomeOrSigla(estado.getNome(), estado.getSigla()))
                     .thenReturn(Optional.of(estado));

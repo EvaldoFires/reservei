@@ -1,4 +1,4 @@
-package br.com.reservei.api.usecases;
+package br.com.reservei.api.application.usecases.avaliacao;
 
 import br.com.reservei.api.application.dto.AvaliacaoDTO;
 import br.com.reservei.api.application.dto.RestauranteDTO;
@@ -7,8 +7,7 @@ import br.com.reservei.api.domain.exceptions.RecursoNaoEncontradoException;
 import br.com.reservei.api.interfaces.mapper.AvaliacaoMapper;
 import br.com.reservei.api.domain.model.Avaliacao;
 import br.com.reservei.api.domain.repository.AvaliacaoRepository;
-import br.com.reservei.api.application.usecases.avaliacao.AvaliacaoServiceImpl;
-import br.com.reservei.api.utils.AvaliacaoHelper;
+import br.com.reservei.api.infrastructure.utils.AvaliacaoHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -21,10 +20,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
-import static br.com.reservei.api.utils.AvaliacaoHelper.gerarAvaliacao;
-import static br.com.reservei.api.utils.AvaliacaoHelper.gerarAvaliacaoDto;
-import static br.com.reservei.api.utils.RestauranteHelper.gerarRestaurante;
-import static br.com.reservei.api.utils.RestauranteHelper.gerarRestauranteDto;
+import static br.com.reservei.api.infrastructure.utils.AvaliacaoHelper.gerarAvaliacao;
+import static br.com.reservei.api.infrastructure.utils.AvaliacaoHelper.gerarAvaliacaoDto;
+import static br.com.reservei.api.infrastructure.utils.RestauranteHelper.gerarRestaurante;
+import static br.com.reservei.api.infrastructure.utils.RestauranteHelper.gerarRestauranteDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;

@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,9 +48,10 @@ public class EstadoController {
     @ApiResponse(responseCode = "201", description = "Estado salvo com sucesso",
             content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = EstadoDTO.class)))
-    @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     @ApiResponse(responseCode = "400", description = "Requisição invalida")
-    public ResponseEntity<EstadoDTO> salvar(@RequestBody EstadoDTO estadoDTO){
+    @ApiResponse(responseCode = "409", description = "Estado já salvo com esses dados")
+    @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    public ResponseEntity<EstadoDTO> salvar(@Valid @RequestBody EstadoDTO estadoDTO){
         estadoDTO = estadoService.salvar(estadoDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(estadoDTO);
     }
@@ -61,7 +63,7 @@ public class EstadoController {
                     schema = @Schema(implementation = EstadoDTO.class)))
     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     @ApiResponse(responseCode = "400", description = "Requisição invalida")
-    public ResponseEntity<EstadoDTO> atualizar(@PathVariable Long idEstado, @RequestBody EstadoDTO estadoDTO){
+    public ResponseEntity<EstadoDTO> atualizar(@PathVariable Long idEstado, @Valid @RequestBody EstadoDTO estadoDTO){
         estadoDTO = estadoService.atualizar(idEstado, estadoDTO);
         return ResponseEntity.ok(estadoDTO);
     }

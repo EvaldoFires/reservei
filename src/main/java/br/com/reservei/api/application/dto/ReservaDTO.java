@@ -1,5 +1,6 @@
 package br.com.reservei.api.application.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,7 +12,8 @@ public record ReservaDTO(
         Long id,
         @NotBlank(message = "O id do restaurante é obrigatório.")
         long restauranteId,
-        @NotNull(message = "O horario de reserva não pode ser nulo")
+        @NotNull(message = "O horário de reserva não pode ser nulo")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
         LocalDateTime horaDaReserva
 ) {
 }

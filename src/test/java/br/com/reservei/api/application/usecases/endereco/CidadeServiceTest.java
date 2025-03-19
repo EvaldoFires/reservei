@@ -1,15 +1,13 @@
-package br.com.reservei.api.usecases;
+package br.com.reservei.api.application.usecases.endereco;
 
 import br.com.reservei.api.application.dto.CidadeDTO;
 import br.com.reservei.api.application.dto.EstadoDTO;
-import br.com.reservei.api.application.usecases.endereco.EstadoService;
 import br.com.reservei.api.domain.exceptions.RecursoJaSalvoException;
 import br.com.reservei.api.domain.exceptions.RecursoNaoEncontradoException;
 import br.com.reservei.api.interfaces.mapper.CidadeMapper;
 import br.com.reservei.api.domain.model.Cidade;
 import br.com.reservei.api.domain.repository.CidadeRepository;
-import br.com.reservei.api.application.usecases.endereco.CidadeServiceImpl;
-import br.com.reservei.api.utils.CidadeHelper;
+import br.com.reservei.api.infrastructure.utils.CidadeHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -22,10 +20,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
-import static br.com.reservei.api.utils.CidadeHelper.gerarCidade;
-import static br.com.reservei.api.utils.CidadeHelper.gerarCidadeDto;
-import static br.com.reservei.api.utils.EstadoHelper.gerarEstado;
-import static br.com.reservei.api.utils.EstadoHelper.gerarEstadoDto;
+import static br.com.reservei.api.infrastructure.utils.CidadeHelper.gerarCidade;
+import static br.com.reservei.api.infrastructure.utils.CidadeHelper.gerarCidadeDto;
+import static br.com.reservei.api.infrastructure.utils.EstadoHelper.gerarEstado;
+import static br.com.reservei.api.infrastructure.utils.EstadoHelper.gerarEstadoDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -127,13 +125,13 @@ class CidadeServiceTest {
         }
     }
 
-    @DisplayName("Cadastrar Cidade")
+    @DisplayName("Salvar Cidade")
     @Nested
-    class CadastrarCidade {
+    class SalvarCidade {
 
-        @DisplayName("Deve cadastrar Cidade")
+        @DisplayName("Deve salvar Cidade")
         @Test
-        void deveCadastrarCidade() {
+        void deveSalvarCidade() {
             // Arrange
             when(cidadeMapper.toEntity(cidadeDTO)).thenReturn(cidade);
             when(cidadeMapper.toDto(cidade)).thenReturn(cidadeDTO);
@@ -158,8 +156,9 @@ class CidadeServiceTest {
 
         @DisplayName("Deve lançar exceção ao tentar salvar cidade com estado e nome já existentes")
         @Test
-        void deveGerarExcecao_QuandoCadastrarCidade_ComNomeEEstadoExistente() {
+        void deveGerarExcecao_QuandoSalvarCidade_ComNomeEEstadoExistente() {
             // Arrange
+            when(estadoService.buscarPorId(cidadeDTO.estadoId())).thenReturn(estadoDTO);
             when(cidadeRepository.findByNomeAndEstado_Id(cidade.getNome(), cidade.getEstado().getId()))
                     .thenReturn(Optional.of(cidade));
 
@@ -167,14 +166,14 @@ class CidadeServiceTest {
             assertThatThrownBy(() -> cidadeService.salvar(cidadeDTO))
                     .isInstanceOf(RecursoJaSalvoException.class)
                     .hasMessage("Uma cidade com nome '" + cidade.getNome() +
-                            "' do estado '" + cidade.getEstado().getNome() + "' já existe no banco de dados.");
+                            "' do estado '" + estadoDTO.nome() + "' já existe no banco de dados.");
 
             verify(cidadeRepository).findByNomeAndEstado_Id(cidade.getNome(), cidade.getEstado().getId());
         }
 
         @DisplayName("Deve lançar exceção ao tentar salvar cidade com estado inexistente")
         @Test
-        void deveGerarExcecao_QuandoCadastrarCidade_ComEstadoInexistente() {
+        void deveGerarExcecao_QuandoSalvarCidade_ComEstadoInexistente() {
             // Arrange
             when(estadoService.buscarPorId(cidadeDTO.estadoId()))
                     .thenThrow(new RecursoNaoEncontradoException("Estado não encontrada com id: " +
@@ -202,7 +201,7 @@ class CidadeServiceTest {
             when(cidadeMapper.toEntity(cidadeDTO)).thenReturn(cidade);
             when(cidadeMapper.toDto(cidade)).thenReturn(cidadeDTO);
             doNothing().when(cidadeMapper).updateFromDto(cidadeDTO, cidade);
-            when(cidadeRepository.findByNomeAndEstado_IdAndNotId(
+            when(cidadeRepository.findByNomeAndEstado_IdAndIdNot(
                     cidade.getNome(), cidade.getEstado().getId(), cidade.getId()))
                     .thenReturn(Optional.empty());
             when(cidadeRepository.save(cidade)).thenReturn(cidade);
@@ -216,7 +215,7 @@ class CidadeServiceTest {
                     .isNotNull()
                     .isInstanceOf(CidadeDTO.class)
                     .isEqualTo(cidadeDTO);
-            verify(cidadeRepository).findByNomeAndEstado_IdAndNotId(cidadeDTO.nome(),
+            verify(cidadeRepository).findByNomeAndEstado_IdAndIdNot(cidadeDTO.nome(),
                     cidadeDTO.estadoId(), cidadeDTO.id());
             verify(cidadeRepository).findById(cidadeDTO.id());
             verify(cidadeRepository).save(cidade);
@@ -245,8 +244,9 @@ class CidadeServiceTest {
             // Arrange
             when(cidadeMapper.toEntity(cidadeDTO)).thenReturn(cidade);
             when(cidadeMapper.toDto(cidade)).thenReturn(cidadeDTO);
+            when(estadoService.buscarPorId(cidadeDTO.estadoId())).thenReturn(estadoDTO);
             when(cidadeRepository.findById(cidade.getId())).thenReturn(Optional.of(cidade));
-            when(cidadeRepository.findByNomeAndEstado_IdAndNotId(cidade.getNome(),
+            when(cidadeRepository.findByNomeAndEstado_IdAndIdNot(cidade.getNome(),
                     cidade.getEstado().getId(), cidade.getId()))
                     .thenReturn(Optional.of(cidade));
 
@@ -254,16 +254,17 @@ class CidadeServiceTest {
             assertThatThrownBy(() -> cidadeService.atualizar(cidadeDTO.id(), cidadeDTO))
                     .isInstanceOf(RecursoJaSalvoException.class)
                     .hasMessage("Uma cidade com nome '" + cidade.getNome() +
-                            "' do estado '" + cidade.getEstado().getNome() + "' já existe no banco de dados.");
+                            "' do estado '" + estadoDTO.nome() + "' já existe no banco de dados.");
 
-            verify(cidadeRepository).findByNomeAndEstado_IdAndNotId(cidade.getNome(),
+            verify(cidadeRepository).findByNomeAndEstado_IdAndIdNot(cidade.getNome(),
                     cidade.getEstado().getId(), cidade.getId());
             verify(cidadeRepository).findById(cidadeDTO.id());
+            verify(estadoService).buscarPorId(cidadeDTO.estadoId());
         }
 
         @DisplayName("Deve lançar exceção ao tentar alterar Cidade por estado inexistente")
         @Test
-        void deveGerarExcecao_QuandoAlterarCidade_PorEstadoInexistente() {
+        void deveGerarExcecao_QuandoAlterarCidade_ComEstadoInexistente() {
             // Arrange
             when(cidadeMapper.toEntity(cidadeDTO)).thenReturn(cidade);
             when(cidadeMapper.toDto(cidade)).thenReturn(cidadeDTO);

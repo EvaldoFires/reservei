@@ -1,4 +1,4 @@
-package br.com.reservei.api.utils;
+package br.com.reservei.api.infrastructure.utils;
 
 import br.com.reservei.api.application.dto.CidadeDTO;
 import br.com.reservei.api.domain.model.Cidade;
@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
-import static br.com.reservei.api.utils.EstadoHelper.gerarEstado;
-import static br.com.reservei.api.utils.EstadoHelper.salvarEstado;
+import static br.com.reservei.api.infrastructure.utils.EstadoHelper.gerarEstado;
+import static br.com.reservei.api.infrastructure.utils.EstadoHelper.salvarEstado;
 
 public class CidadeHelper {
     public static Cidade gerarCidade(){
@@ -19,6 +19,12 @@ public class CidadeHelper {
                 .nome("Salvador")
                 .estado(gerarEstado())
                 .build();
+    }
+
+    public static CidadeDTO gerarCidadeDtoSemId(Long estadoId){
+        return new CidadeDTO(null,
+                "Salvador",
+                estadoId);
     }
 
     public static CidadeDTO gerarCidadeDto(Cidade cidade){

@@ -1,14 +1,12 @@
-package br.com.reservei.api.usecases;
+package br.com.reservei.api.application.usecases.endereco;
 
 import br.com.reservei.api.application.dto.CidadeDTO;
 import br.com.reservei.api.application.dto.EnderecoDTO;
-import br.com.reservei.api.application.usecases.endereco.CidadeService;
 import br.com.reservei.api.domain.exceptions.RecursoNaoEncontradoException;
 import br.com.reservei.api.interfaces.mapper.EnderecoMapper;
 import br.com.reservei.api.domain.model.Endereco;
 import br.com.reservei.api.domain.repository.EnderecoRepository;
-import br.com.reservei.api.application.usecases.endereco.EnderecoServiceImpl;
-import br.com.reservei.api.utils.EnderecoHelper;
+import br.com.reservei.api.infrastructure.utils.EnderecoHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -21,10 +19,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
-import static br.com.reservei.api.utils.CidadeHelper.gerarCidade;
-import static br.com.reservei.api.utils.CidadeHelper.gerarCidadeDto;
-import static br.com.reservei.api.utils.EnderecoHelper.gerarEndereco;
-import static br.com.reservei.api.utils.EnderecoHelper.gerarEnderecoDto;
+import static br.com.reservei.api.infrastructure.utils.CidadeHelper.gerarCidade;
+import static br.com.reservei.api.infrastructure.utils.CidadeHelper.gerarCidadeDto;
+import static br.com.reservei.api.infrastructure.utils.EnderecoHelper.gerarEndereco;
+import static br.com.reservei.api.infrastructure.utils.EnderecoHelper.gerarEnderecoDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;

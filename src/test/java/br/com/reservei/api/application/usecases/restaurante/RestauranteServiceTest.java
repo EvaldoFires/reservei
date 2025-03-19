@@ -1,4 +1,4 @@
-package br.com.reservei.api.usecases;
+package br.com.reservei.api.application.usecases.restaurante;
 
 import br.com.reservei.api.application.dto.EnderecoDTO;
 import br.com.reservei.api.application.dto.RestauranteDTO;
@@ -7,8 +7,7 @@ import br.com.reservei.api.domain.exceptions.RecursoNaoEncontradoException;
 import br.com.reservei.api.interfaces.mapper.RestauranteMapper;
 import br.com.reservei.api.domain.model.Restaurante;
 import br.com.reservei.api.domain.repository.RestauranteRepository;
-import br.com.reservei.api.application.usecases.restaurante.RestauranteServiceImpl;
-import br.com.reservei.api.utils.RestauranteHelper;
+import br.com.reservei.api.infrastructure.utils.RestauranteHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -21,10 +20,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
-import static br.com.reservei.api.utils.EnderecoHelper.gerarEndereco;
-import static br.com.reservei.api.utils.EnderecoHelper.gerarEnderecoDto;
-import static br.com.reservei.api.utils.RestauranteHelper.gerarRestaurante;
-import static br.com.reservei.api.utils.RestauranteHelper.gerarRestauranteDto;
+import static br.com.reservei.api.infrastructure.utils.EnderecoHelper.gerarEndereco;
+import static br.com.reservei.api.infrastructure.utils.EnderecoHelper.gerarEnderecoDto;
+import static br.com.reservei.api.infrastructure.utils.RestauranteHelper.gerarRestaurante;
+import static br.com.reservei.api.infrastructure.utils.RestauranteHelper.gerarRestauranteDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;

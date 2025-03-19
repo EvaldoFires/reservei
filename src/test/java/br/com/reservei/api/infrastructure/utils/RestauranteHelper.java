@@ -1,4 +1,4 @@
-package br.com.reservei.api.utils;
+package br.com.reservei.api.infrastructure.utils;
 
 import br.com.reservei.api.application.dto.RestauranteDTO;
 import br.com.reservei.api.domain.model.Restaurante;
@@ -6,13 +6,12 @@ import br.com.reservei.api.domain.repository.CidadeRepository;
 import br.com.reservei.api.domain.repository.EnderecoRepository;
 import br.com.reservei.api.domain.repository.EstadoRepository;
 import br.com.reservei.api.domain.repository.RestauranteRepository;
-import br.com.reservei.api.infrastructure.utils.Cozinha;
 
 import java.time.LocalTime;
 import java.util.UUID;
 
-import static br.com.reservei.api.utils.EnderecoHelper.gerarEndereco;
-import static br.com.reservei.api.utils.EnderecoHelper.salvarEndereco;
+import static br.com.reservei.api.infrastructure.utils.EnderecoHelper.gerarEndereco;
+import static br.com.reservei.api.infrastructure.utils.EnderecoHelper.salvarEndereco;
 
 public class RestauranteHelper {
 
@@ -36,6 +35,16 @@ public class RestauranteHelper {
                 restaurante.getReservasPorHora(),
                 restaurante.getInicioExpediente(),
                 restaurante.getFinalExpediente());
+    }
+
+    public static RestauranteDTO gerarRestauranteDtoSemId(Long enderecoId){
+        return new RestauranteDTO(null,
+                "Germogli",
+                Cozinha.ITALIANA,
+                enderecoId,
+                10,
+                LocalTime.NOON,
+                LocalTime.MIDNIGHT);
     }
 
 //    @Transactional(propagation = Propagation.REQUIRES_NEW)

@@ -1,11 +1,11 @@
-package br.com.reservei.api.utils;
+package br.com.reservei.api.infrastructure.utils;
 
 import br.com.reservei.api.application.dto.AvaliacaoDTO;
 import br.com.reservei.api.domain.model.Avaliacao;
 
 import java.util.UUID;
 
-import static br.com.reservei.api.utils.RestauranteHelper.gerarRestaurante;
+import static br.com.reservei.api.infrastructure.utils.RestauranteHelper.gerarRestaurante;
 
 public class AvaliacaoHelper {
 
@@ -24,6 +24,15 @@ public class AvaliacaoHelper {
                 avaliacao.getComentario(),
                 avaliacao.getDataCriacao(),
                 avaliacao.getRestaurante().getId());
+
+    }
+
+    public static AvaliacaoDTO gerarAvaliacaoDtoSemId(Long restauranteId){
+        return new AvaliacaoDTO(null,
+                5,
+                "Tudo ótimo",
+                null,
+                restauranteId);
 
     }
 

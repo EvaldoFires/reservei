@@ -1,4 +1,4 @@
-package br.com.reservei.api.utils;
+package br.com.reservei.api.infrastructure.utils;
 
 import br.com.reservei.api.application.dto.EstadoDTO;
 import br.com.reservei.api.domain.model.Cidade;
@@ -15,6 +15,14 @@ public class EstadoHelper {
     public static Estado gerarEstado(){
         return Estado.builder()
                 .id(Math.abs(UUID.randomUUID().getMostSignificantBits()))
+                .nome("Bahia")
+                .sigla("BA")
+                .cidades(new ArrayList<Cidade>())
+                .build();
+    }
+
+    public static Estado gerarEstadoSemId(){
+        return Estado.builder()
                 .nome("Bahia")
                 .sigla("BA")
                 .cidades(new ArrayList<Cidade>())

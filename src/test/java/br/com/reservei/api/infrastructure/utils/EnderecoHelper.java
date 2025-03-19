@@ -1,4 +1,4 @@
-package br.com.reservei.api.utils;
+package br.com.reservei.api.infrastructure.utils;
 
 import br.com.reservei.api.application.dto.EnderecoDTO;
 import br.com.reservei.api.domain.model.Endereco;
@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
-import static br.com.reservei.api.utils.CidadeHelper.salvarCidade;
+import static br.com.reservei.api.infrastructure.utils.CidadeHelper.salvarCidade;
 
 public class EnderecoHelper {
     public static Endereco gerarEndereco(){
@@ -29,6 +29,15 @@ public class EnderecoHelper {
                 endereco.getBairro(),
                 endereco.getRua(),
                 endereco.getNumero());
+    }
+
+    public static EnderecoDTO gerarEnderecoDtoSemId(Long cidadeId){
+        return new EnderecoDTO(null,
+                cidadeId,
+                "Centro",
+                "Rua Santa Maria",
+                "117"
+        );
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
