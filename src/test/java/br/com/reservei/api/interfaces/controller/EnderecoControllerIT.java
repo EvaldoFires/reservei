@@ -111,7 +111,7 @@ class EnderecoControllerIT {
         void deveBuscarTodosOsEnderecos() {
             var enderecos = List.of(enderecoService.salvar(enderecoDTO),
                     enderecoService.salvar(new EnderecoDTO(null, enderecoDTO.cidadeId(), "Outro bairro",
-                            "Outra rua", "2")));
+                            "Outra rua", "2","12345-678")));
 
             given()
                     .spec(requestSpec)
@@ -157,7 +157,7 @@ class EnderecoControllerIT {
             var enderecoSalvo = enderecoService.salvar(enderecoDTO);
 
             var enderecoNovo = new EnderecoDTO(enderecoSalvo.id(), enderecoDTO.cidadeId(), "Outro bairro",
-                    "Outra rua", "2");
+                    "Outra rua", "2","12345-678");
 
             given()
                     .spec(requestSpec)
