@@ -18,7 +18,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/avaliacao")
 @RequiredArgsConstructor
-@Tag(name = "Avaliação", description = "Recurso para Gestão de Avaliações")
+@Tag(name = "Avaliação", description = "Recurso para Gestão de Avaliações de Restaurantes")
 public class AvaliacaoController {
 
     private final AvaliacaoService avaliacaoService;
