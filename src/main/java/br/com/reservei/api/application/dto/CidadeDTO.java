@@ -10,7 +10,6 @@ public record CidadeDTO(
         @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         @Schema(example = "1")
         Long id,
-
         @NotBlank(message = "O Nome é obrigatório")
         @Schema(example = "Belo Horizonte")
         String nome,

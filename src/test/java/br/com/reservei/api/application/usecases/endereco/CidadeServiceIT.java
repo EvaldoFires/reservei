@@ -11,7 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -24,6 +26,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@Sql(scripts = {"/clean.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
 @Transactional
 class CidadeServiceIT {
 
@@ -87,13 +91,13 @@ class CidadeServiceIT {
         }
     }
 
-    @DisplayName("Cadastrar Cidade")
+    @DisplayName("Salvar Cidade")
     @Nested
-    class CadastrarCidade {
+    class SalvarCidade {
 
-        @DisplayName("Deve cadastrar Cidade")
+        @DisplayName("Deve salvar Cidade")
         @Test
-        void deveCadastrarCidade() {
+        void deveSalvarCidade() {
             var cidadeSalva = cidadeService.salvar(cidadeDTO);
 
             // Assert
@@ -110,7 +114,7 @@ class CidadeServiceIT {
 
         @DisplayName("Deve lançar exceção ao tentar salvar cidade com estado e nome já existentes")
         @Test
-        void deveGerarExcecao_QuandoCadastrarCidade_ComNomeEEstadoExistente() {
+        void deveGerarExcecao_QuandoSalvarCidade_ComNomeEEstadoExistente() {
             cidadeService.salvar(cidadeDTO);
 
             assertThatThrownBy(() -> cidadeService.salvar(cidadeDTO))
@@ -121,7 +125,7 @@ class CidadeServiceIT {
 
         @DisplayName("Deve lançar exceção ao tentar salvar cidade com estado inexistente")
         @Test
-        void deveGerarExcecao_QuandoCadastrarCidade_ComEstadoInexistente() {
+        void deveGerarExcecao_QuandoSalvarCidade_ComEstadoInexistente() {
             cidadeDTO = new CidadeDTO(null, "Campinas", 2L);
             assertThatThrownBy(() -> cidadeService.salvar(cidadeDTO))
                     .isInstanceOf(RecursoNaoEncontradoException.class)

@@ -14,7 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalTime;
@@ -31,6 +33,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@Sql(scripts = {"/clean.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
 @Transactional
 class RestauranteServiceIT {
 
@@ -109,13 +113,13 @@ class RestauranteServiceIT {
         }
     }
 
-    @DisplayName("Cadastrar Restaurante")
+    @DisplayName("Salvar Restaurante")
     @Nested
-    class CadastrarRestaurante {
+    class SalvarRestaurante {
 
-        @DisplayName("Deve cadastrar Restaurante")
+        @DisplayName("Deve salvar Restaurante")
         @Test
-        void deveCadastrarRestaurante() {
+        void deveSalvarRestaurante() {
             var restauranteSalva = restauranteService.salvar(restauranteDTO);
 
             // Assert
@@ -132,7 +136,7 @@ class RestauranteServiceIT {
 
         @DisplayName("Deve lançar exceção ao tentar salvar Restaurante com cidade inexistente")
         @Test
-        void deveGerarExcecao_QuandoCadastrarRestaurante_ComEnderecoInexistente() {
+        void deveGerarExcecao_QuandoSalvarRestaurante_ComEnderecoInexistente() {
             restauranteDTO = new RestauranteDTO(null, "Paris 6", Cozinha.FRANCESA,
                     2L, 10, LocalTime.NOON, LocalTime.MIDNIGHT);
             assertThatThrownBy(() -> restauranteService.salvar(restauranteDTO))

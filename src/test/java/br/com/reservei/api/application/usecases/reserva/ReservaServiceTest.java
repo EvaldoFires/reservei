@@ -120,13 +120,13 @@ class ReservaServiceTest {
         }
     }
 
-    @DisplayName("Cadastrar Reserva")
+    @DisplayName("Salvar Reserva")
     @Nested
-    class CadastrarReserva {
+    class SalvarReserva {
 
-        @DisplayName("Deve cadastrar Reserva")
+        @DisplayName("Deve salvar Reserva")
         @Test
-        void deveCadastrarReserva() {
+        void deveSalvarReserva() {
             // Arrange
             when(reservaMapper.toEntity(reservaDTO)).thenReturn(reserva);
             when(reservaMapper.toDto(reserva)).thenReturn(reservaDTO);
@@ -149,7 +149,7 @@ class ReservaServiceTest {
 
         @DisplayName("Deve lançar exceção ao tentar salvar Reserva com restaurante inexistente")
         @Test
-        void deveGerarExcecao_QuandoCadastrarReserva_ComRestauranteInexistente() {
+        void deveGerarExcecao_QuandoSalvarReserva_ComRestauranteInexistente() {
             // Arrange
             when(restauranteService.buscarPorId(reservaDTO.restauranteId())).thenThrow(new
                     RecursoNaoEncontradoException("Restaurante não encontrado com id: " + reservaDTO.restauranteId()));

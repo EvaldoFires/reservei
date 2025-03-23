@@ -10,9 +10,6 @@ public class GeneralHelper {
 
     public static String asJsonString(final Object obj) {
         try {
-//            ObjectMapper objectMapper = new ObjectMapper();
-//            objectMapper.registerModule(new JavaTimeModule());
-
             return OBJECT_MAPPER.writeValueAsString(obj);
         } catch (Exception e) {
             throw new RuntimeException(e);

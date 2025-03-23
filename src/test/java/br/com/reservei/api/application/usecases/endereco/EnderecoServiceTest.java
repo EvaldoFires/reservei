@@ -122,13 +122,13 @@ class EnderecoServiceTest {
         }
     }
 
-    @DisplayName("Cadastrar Endereço")
+    @DisplayName("Salvar Endereço")
     @Nested
-    class CadastrarEndereco {
+    class SalvarEndereco {
 
-        @DisplayName("Deve cadastrar Endereço")
+        @DisplayName("Deve salvar Endereço")
         @Test
-        void deveCadastrarEndereco() {
+        void deveSalvarEndereco() {
             // Arrange
             when(enderecoMapper.toEntity(enderecoDTO)).thenReturn(endereco);
             when(enderecoMapper.toDto(endereco)).thenReturn(enderecoDTO);
@@ -152,7 +152,7 @@ class EnderecoServiceTest {
 
         @DisplayName("Deve lançar exceção ao tentar salvar endereço com cidade inexistente")
         @Test
-        void deveGerarExcecao_QuandoCadastrarEndereco_ComCidadeInexistente() {
+        void deveGerarExcecao_QuandoSalvarEndereco_ComCidadeInexistente() {
             // Arrange
             when(cidadeService.buscarPorId(enderecoDTO.cidadeId()))
                     .thenThrow(new RecursoNaoEncontradoException("Cidade não encontrada com id: " +

@@ -10,7 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -25,6 +27,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@Sql(scripts = {"/clean.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
 @Transactional
 class EnderecoServiceIT {
 
@@ -93,13 +97,13 @@ class EnderecoServiceIT {
         }
     }
 
-    @DisplayName("Cadastrar Endereço")
+    @DisplayName("Salvar Endereço")
     @Nested
-    class CadastrarEndereco {
+    class SalvarEndereco {
 
-        @DisplayName("Deve cadastrar Endereço")
+        @DisplayName("Deve salvar Endereço")
         @Test
-        void deveCadastrarEndereco() {
+        void deveSalvarEndereco() {
             var enderecoSalva = enderecoService.salvar(enderecoDTO);
 
             // Assert
@@ -116,7 +120,7 @@ class EnderecoServiceIT {
 
         @DisplayName("Deve lançar exceção ao tentar salvar Endereço com cidade inexistente")
         @Test
-        void deveGerarExcecao_QuandoCadastrarEndereco_ComCidadeInexistente() {
+        void deveGerarExcecao_QuandoSalvarEndereco_ComCidadeInexistente() {
             enderecoDTO = new EnderecoDTO(null, 2L, "bairro", "rua", "111");
             assertThatThrownBy(() -> enderecoService.salvar(enderecoDTO))
                     .isInstanceOf(RecursoNaoEncontradoException.class)

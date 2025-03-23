@@ -14,7 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -32,6 +34,8 @@ import static org.assertj.core.api.Assertions.*;
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@Sql(scripts = {"/clean.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
 @Transactional
 class AvaliacaoServiceIT {
 
@@ -111,13 +115,13 @@ class AvaliacaoServiceIT {
         }
     }
 
-    @DisplayName("Cadastrar Avaliação")
+    @DisplayName("Salvar Avaliação")
     @Nested
-    class CadastrarAvaliacao {
+    class SalvarAvaliacao {
 
-        @DisplayName("Deve cadastrar Avaliação")
+        @DisplayName("Deve salvar Avaliação")
         @Test
-        void deveCadastrarAvaliacao() {
+        void deveSalvarAvaliacao() {
             var avaliacaoSalva = avaliacaoService.salvar(avaliacaoDTO);
 
             // Assert
@@ -137,7 +141,7 @@ class AvaliacaoServiceIT {
 
         @DisplayName("Deve lançar exceção ao tentar salvar Avaliação com restaurante inexistente")
         @Test
-        void deveGerarExcecao_QuandoCadastrarAvaliacao_ComRestauranteInexistente() {
+        void deveGerarExcecao_QuandoSalvarAvaliacao_ComRestauranteInexistente() {
             avaliacaoDTO = new AvaliacaoDTO(null, 1, "Muito ruim", null, 2L);
             assertThatThrownBy(() -> avaliacaoService.salvar(avaliacaoDTO))
                     .isInstanceOf(RecursoNaoEncontradoException.class)

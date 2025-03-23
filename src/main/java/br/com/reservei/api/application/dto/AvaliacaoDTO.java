@@ -29,6 +29,6 @@ public record AvaliacaoDTO(
 
         @NotBlank(message = "O id do restaurante é obrigatório.")
         @Schema(example = "1")
-        long restauranteId
+        Long restauranteId
 ) {
 }

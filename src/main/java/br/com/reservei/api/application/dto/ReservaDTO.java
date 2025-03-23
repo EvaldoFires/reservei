@@ -14,7 +14,7 @@ public record ReservaDTO(
         Long id,
         @NotBlank(message = "O id do restaurante é obrigatório.")
         @Schema(example = "1")
-        long restauranteId,
+        Long restauranteId,
         @NotNull(message = "O horário de reserva não pode ser nulo")
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
         @Schema(example = "2021-10-10 20:00:00")

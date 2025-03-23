@@ -4,7 +4,6 @@ import br.com.reservei.api.application.dto.CidadeDTO;
 import br.com.reservei.api.application.dto.EstadoDTO;
 import br.com.reservei.api.domain.exceptions.RecursoJaSalvoException;
 import br.com.reservei.api.domain.exceptions.RecursoNaoEncontradoException;
-import br.com.reservei.api.domain.model.Estado;
 import br.com.reservei.api.interfaces.mapper.CidadeMapper;
 import br.com.reservei.api.domain.model.Cidade;
 import br.com.reservei.api.domain.repository.CidadeRepository;

@@ -3,7 +3,6 @@ package br.com.reservei.api.application.usecases.endereco;
 import br.com.reservei.api.application.dto.EstadoDTO;
 import br.com.reservei.api.domain.exceptions.RecursoJaSalvoException;
 import br.com.reservei.api.domain.exceptions.RecursoNaoEncontradoException;
-import br.com.reservei.api.domain.repository.EstadoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -11,7 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -24,11 +25,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@Sql(scripts = {"/clean.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
 @Transactional
 class EstadoServiceIT {
-
-    @Autowired
-    private EstadoRepository estadoRepository;
 
     @Autowired
     private EstadoService estadoService;
@@ -84,9 +84,9 @@ class EstadoServiceIT {
         }
     }
 
-    @DisplayName("Cadastrar Estado")
+    @DisplayName("Salvar Estado")
     @Nested
-    class CadastrarEstado {
+    class SalvarEstado {
 
         @DisplayName("Deve salvar Estado")
         @Test
@@ -152,7 +152,9 @@ class EstadoServiceIT {
         @Test
         void deveGerarExcecao_QuandoAlterarEstado_PorEstadoExistente() {
             var estadoSalvo = estadoService.salvar(estadoDTO);
-            assertThatThrownBy(() -> estadoService.atualizar(estadoSalvo.id(), estadoSalvo))
+            var estadoSalvo2 = estadoService.salvar(new EstadoDTO(null, "Paraíba", "PB"));
+
+            assertThatThrownBy(() -> estadoService.atualizar(estadoSalvo2.id(), estadoSalvo))
                     .isInstanceOf(RecursoJaSalvoException.class)
                     .hasMessage("Um estado com sigla '" + estadoSalvo.sigla() +
                             "' ou nome '" + estadoSalvo.nome() + "' já existe no banco de dados.");

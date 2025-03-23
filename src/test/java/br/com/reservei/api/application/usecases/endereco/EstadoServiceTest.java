@@ -113,9 +113,9 @@ class EstadoServiceTest {
         }
     }
 
-    @DisplayName("Cadastrar Estado")
+    @DisplayName("Salvar Estado")
     @Nested
-    class CadastrarEstado {
+    class SalvarEstado {
 
         @DisplayName("Deve salvar Estado")
         @Test

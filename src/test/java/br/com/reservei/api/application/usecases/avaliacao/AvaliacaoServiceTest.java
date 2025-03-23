@@ -121,13 +121,13 @@ class AvaliacaoServiceTest {
         }
     }
 
-    @DisplayName("Cadastrar Avaliação")
+    @DisplayName("Salvar Avaliação")
     @Nested
-    class CadastrarAvaliacao {
+    class SalvarAvaliacao {
 
-        @DisplayName("Deve cadastrar Avaliação")
+        @DisplayName("Deve salvar Avaliação")
         @Test
-        void deveCadastrarAvaliacao() {
+        void deveSalvarAvaliacao() {
             // Arrange
             when(avaliacaoMapper.toEntity(avaliacaoDTO)).thenReturn(avaliacao);
             when(avaliacaoMapper.toDto(avaliacao)).thenReturn(avaliacaoDTO);
@@ -150,7 +150,7 @@ class AvaliacaoServiceTest {
 
         @DisplayName("Deve lançar exceção ao tentar salvar Avaliação com restaurante inexistente")
         @Test
-        void deveGerarExcecao_QuandoCadastrarAvaliacao_ComRestauranteInexistente() {
+        void deveGerarExcecao_QuandoSalvarAvaliacao_ComRestauranteInexistente() {
             // Arrange
             when(restauranteService.buscarPorId(avaliacaoDTO.restauranteId())).thenThrow(new
                     RecursoNaoEncontradoException("Restaurante não encontrado com id: " + avaliacaoDTO.restauranteId()));

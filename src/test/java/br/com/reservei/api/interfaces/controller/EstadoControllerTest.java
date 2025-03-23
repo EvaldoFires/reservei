@@ -5,7 +5,6 @@ import br.com.reservei.api.application.usecases.endereco.EstadoService;
 import br.com.reservei.api.domain.exceptions.GlobalExceptionHandler;
 import br.com.reservei.api.domain.exceptions.RecursoJaSalvoException;
 import br.com.reservei.api.domain.exceptions.RecursoNaoEncontradoException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

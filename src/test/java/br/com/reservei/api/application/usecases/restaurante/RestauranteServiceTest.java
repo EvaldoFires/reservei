@@ -120,13 +120,13 @@ class RestauranteServiceTest {
         }
     }
 
-    @DisplayName("Cadastrar Restaurante")
+    @DisplayName("Salvar Restaurante")
     @Nested
-    class CadastrarRestaurante {
+    class SalvarRestaurante {
 
-        @DisplayName("Deve cadastrar Restaurante")
+        @DisplayName("Deve salvar Restaurante")
         @Test
-        void deveCadastrarRestaurante() {
+        void deveSalvarRestaurante() {
             // Arrange
             when(restauranteMapper.toEntity(restauranteDTO)).thenReturn(restaurante);
             when(restauranteMapper.toDto(restaurante)).thenReturn(restauranteDTO);
@@ -149,7 +149,7 @@ class RestauranteServiceTest {
 
         @DisplayName("Deve lançar exceção ao tentar salvar Restaurante com endereço inexistente")
         @Test
-        void deveGerarExcecao_QuandoCadastrarRestaurante_ComEnderecoInexistente() {
+        void deveGerarExcecao_QuandoSalvarRestaurante_ComEnderecoInexistente() {
             // Arrange
             when(enderecoService.buscarPorId(restauranteDTO.enderecoId())).thenThrow(new
                     RecursoNaoEncontradoException("Endereco não encontrado com id: " + restauranteDTO.enderecoId()));

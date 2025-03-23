@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -49,7 +50,7 @@ public class EstadoServiceImpl implements EstadoService {
     @Override
     public EstadoDTO atualizar(Long id, EstadoDTO estadoDto) {
         Estado estado = estadoMapper.toEntity(this.buscarPorId(id));
-        estadoRepository.findByNomeOrSiglaAndIdNot(estadoDto.nome(), estadoDto.sigla(), id)
+        estadoRepository.findByNomeOrSiglaAndIdNot(estadoDto.nome(), estadoDto.sigla(), estado.getId())
                 .ifPresent(estadoPresente -> {
                     throw new RecursoJaSalvoException("Um estado com sigla '" + estadoPresente.getSigla() +
                             "' ou nome '" + estadoPresente.getNome() + "' já existe no banco de dados.");
