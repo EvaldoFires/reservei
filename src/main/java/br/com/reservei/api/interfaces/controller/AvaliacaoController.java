@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/avaliacao")
 @RequiredArgsConstructor
+@Tag(name = "Avaliação", description = "Recurso para Gestão de Avaliações")
 public class AvaliacaoController {
 
     private final AvaliacaoService avaliacaoService;
