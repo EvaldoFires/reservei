@@ -21,6 +21,9 @@ public record EnderecoDTO(
         @Schema(example = "Rua das Flores")
         String rua,
         @Schema(example = "123")
-        String numero
+        String numero,
+        @NotBlank(message = "O CEP é obrigatório")
+        @Schema(example = "12345-678")
+        String cep
 ) {
 }

@@ -121,7 +121,7 @@ class EnderecoServiceIT {
         @DisplayName("Deve lançar exceção ao tentar salvar Endereço com cidade inexistente")
         @Test
         void deveGerarExcecao_QuandoSalvarEndereco_ComCidadeInexistente() {
-            enderecoDTO = new EnderecoDTO(null, 2L, "bairro", "rua", "111");
+            enderecoDTO = new EnderecoDTO(null, 2L, "bairro", "rua", "111","12345-001");
             assertThatThrownBy(() -> enderecoService.salvar(enderecoDTO))
                     .isInstanceOf(RecursoNaoEncontradoException.class)
                     .hasMessage("Cidade não encontrada com id: " +
@@ -138,7 +138,7 @@ class EnderecoServiceIT {
         void deveAlterarEnderecoPorId() {
             enderecoDTO = enderecoService.salvar(enderecoDTO);
             var enderecoAtualizada = enderecoService.atualizar(enderecoDTO.id(),
-                    new EnderecoDTO(null, enderecoDTO.cidadeId(), "Outro Bairro", "Outra rua", "4"));
+                    new EnderecoDTO(null, enderecoDTO.cidadeId(), "Outro Bairro", "Outra rua", "4","12345-002"));
 
             assertThat(enderecoAtualizada)
                     .isNotNull()
@@ -162,7 +162,7 @@ class EnderecoServiceIT {
         void deveGerarExcecao_QuandoAlterarEndereco_PorCidadeInexistente() {
             Long id = 2L;
             enderecoDTO = enderecoService.salvar(enderecoDTO);
-            enderecoDTO = new EnderecoDTO(enderecoDTO.id(), id, "bairro novo", "rua nova", "4");
+            enderecoDTO = new EnderecoDTO(enderecoDTO.id(), id, "bairro novo", "rua nova", "4","12345-003");
 
             assertThatThrownBy(() -> enderecoService.atualizar(enderecoDTO.id(), enderecoDTO))
                     .isInstanceOf(RecursoNaoEncontradoException.class)
