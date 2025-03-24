@@ -16,10 +16,10 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Configurar JDK 21
+      - name: Configurar JDK 21 (Amazon Corretto)
         uses: actions/setup-java@v3
         with:
-          distribution: 'Amazon Coretto'
+          distribution: 'corretto'
           java-version: '21'
           cache: maven
 
