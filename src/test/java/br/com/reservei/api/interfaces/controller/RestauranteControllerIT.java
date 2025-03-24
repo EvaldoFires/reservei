@@ -127,7 +127,7 @@ class RestauranteControllerIT {
         void deveBuscarTodosOsRestaurantes() {
             var restauranteDTO1 = restauranteService.salvar(restauranteDTO);
             enderecoDTO = enderecoService.salvar( new EnderecoDTO(null, enderecoDTO.cidadeId(),
-                    "Bairro2", "rua2", "2"));
+                    "Bairro2", "rua2", "2", "42600-000"));
             var restauranteDTO2 = restauranteService.salvar(gerarRestauranteDtoSemId(enderecoDTO.id()));
 
             var restaurantes = List.of(restauranteDTO1,restauranteDTO2);

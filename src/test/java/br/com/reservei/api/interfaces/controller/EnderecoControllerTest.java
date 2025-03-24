@@ -88,7 +88,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
             @Test
             void deveBuscarTodosOsEnderecos() throws Exception {
                 var enderecos = List.of(enderecoDTO,
-                        new EnderecoDTO(2L, cidadeDTO.id(), "bairro2", "rua2", "2"));
+                        new EnderecoDTO(2L, cidadeDTO.id(), "bairro2", "rua2", "2", "42600-000"));
 
                 when(enderecoService.buscarTodos()).thenReturn(enderecos);
 

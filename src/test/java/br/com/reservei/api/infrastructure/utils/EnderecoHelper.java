@@ -28,7 +28,8 @@ public class EnderecoHelper {
                 endereco.getCidade().getId(),
                 endereco.getBairro(),
                 endereco.getRua(),
-                endereco.getNumero());
+                endereco.getNumero(),
+                endereco.getCep());
     }
 
     public static EnderecoDTO gerarEnderecoDtoSemId(Long cidadeId){
@@ -36,7 +37,8 @@ public class EnderecoHelper {
                 cidadeId,
                 "Centro",
                 "Rua Santa Maria",
-                "117"
+                "117",
+                "42600-000"
         );
     }
 

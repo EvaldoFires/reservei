@@ -94,10 +94,10 @@ class RestauranteServiceIT {
         void deveBuscarTodasAsRestaurante() {
             var restauranteDTO1 = restauranteService.salvar(restauranteDTO);
             enderecoDTO = enderecoService.salvar( new EnderecoDTO(null, enderecoDTO.cidadeId(),
-                    "Bairro2", "rua2", "2"));
+                    "Bairro2", "rua2", "2", "42600-000"));
             var restauranteDTO2 = restauranteService.salvar(gerarRestauranteDtoSemId(enderecoDTO.id()));
             enderecoDTO = enderecoService.salvar( new EnderecoDTO(null, enderecoDTO.cidadeId(),
-                    "Bairro3", "rua3", "3"));
+                    "Bairro3", "rua3", "3", "42600-000"));
             var restauranteDTO3 = restauranteService.salvar(gerarRestauranteDtoSemId(enderecoDTO.id()));
 
             var restaurantesSalvas = List.of(restauranteDTO1, restauranteDTO2, restauranteDTO3);
