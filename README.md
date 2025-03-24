@@ -17,6 +17,7 @@ Autores:
 3. [Instruções de execução](#executando-a-aplicação)
 4. [Deploy em nuvem grátis](#deploy-em-cloud-pública-gratuita)
 5. [Deploy em nuvem paga](#deploy-em-cloud-pública-paga)
+6. [Configuração esteira de CI]
 
 ## Sobre o projeto
 #### Doc Técnica
@@ -64,4 +65,8 @@ URL: https://reservei.onrender.com/swagger-ui/index.html#/
 
 ## Deploy em Cloud Pública Paga
 URL: TBD
+
+## Configuração de esteira de CI
+Esteira de CI Configurada em [Git Hub Actions - Esteira](.github/workflows/cy.yml) 
+
 
