@@ -113,15 +113,17 @@
     </dependency>
 
     <!-- Teste de Performance-->
+    <!-- https://mvnrepository.com/artifact/io.gatling/gatling-core -->
     <dependency>
       <groupId>io.gatling</groupId>
       <artifactId>gatling-core</artifactId>
-      <version>3.13.4</version>
+      <version>3.13.5</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/io.gatling.highcharts/gatling-charts-highcharts -->
     <dependency>
       <groupId>io.gatling.highcharts</groupId>
       <artifactId>gatling-charts-highcharts</artifactId>
-      <version>3.13.4</version>
+      <version>3.13.5</version>
     </dependency>
 
     <!-- para testar controller de forma mais fluida -->
@@ -235,6 +237,25 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>performance-test</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>io.gatling</groupId>
+            <artifactId>gatling-core</artifactId>
+            <version>3.13.5</version>
+            <configuration>
+              <simulationClass>br.com.reservei.api.performance.PerformanceSimulation</simulationClass>
+            </configuration>
+          </plugin>
+
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 
 </project>
