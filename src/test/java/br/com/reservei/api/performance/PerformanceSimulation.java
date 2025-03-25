@@ -75,13 +75,7 @@ public class PerformanceSimulation extends Simulation {
                             .toList()
                             .iterator()
             )
-            .exec(
-                    http("request: adicionar estado")
-                            .post("/estado")
-                            .body(StringBody("{\"nome\": \"#{nome}\", \"sigla\": \"#{sigla}\"}"))
-                            .check(status().is(201))
-                            .check(jsonPath("$.id").saveAs("estadoId"))
-            )
+            .exec(adicionarEstadoRequest)
             .exec(session -> {
                 String id = session.getString("estadoId");
                 //System.out.println("ID do Insert=" + id);
