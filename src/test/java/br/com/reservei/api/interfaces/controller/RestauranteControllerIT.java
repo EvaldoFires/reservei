@@ -122,6 +122,42 @@ class RestauranteControllerIT {
 
         }
 
+        @DisplayName("Deve buscar um Restaurante pelo Nome fornecido")
+        @Test
+        void deveBuscarRestaurantePorNome() {
+            var restauranteSalvo = restauranteService.salvar(restauranteDTO);
+
+            given()
+                    .spec(requestSpec)
+            .when()
+                    .get("/restaurante/nome/{nomeRestaurante}", restauranteSalvo.nome())
+            .then()
+                    .statusCode(HttpStatus.OK.value())
+                    .body("nome", equalTo(restauranteDTO.nome()))
+                    .body("cozinha", is(restauranteDTO.cozinha().toString()))
+                    .body("reservasPorHora", equalTo(restauranteDTO.reservasPorHora()))
+                    .body("inicioExpediente", equalTo(restauranteDTO.inicioExpediente()
+                            .format(DateTimeFormatter.ofPattern("HH:mm:ss"))))
+                    .body("finalExpediente", equalTo(restauranteDTO.finalExpediente()
+                            .format(DateTimeFormatter.ofPattern("HH:mm:ss"))))
+                    .body("enderecoId", is(restauranteDTO.enderecoId().intValue()));
+        }
+
+        @DisplayName("Deve lançar exceção ao buscar Restaurante com Nome inexistente")
+        @Test
+        void deveGerarExcecao_QuandoBuscarRestaurante_PorNomeInexistente() {
+            var nome = "Fiap Bistrô";
+
+            given()
+                    .spec(requestSpec)
+            .when()
+                    .get("/restaurante/nome/{nomeRestaurante}", nome)
+            .then()
+                    .statusCode(HttpStatus.NOT_FOUND.value())
+                    .body("message", equalTo("Restaurante não encontrado com nome: " + nome));
+
+        }
+
         @DisplayName("Deve retornar uma lista de restaurantes salvos")
         @Test
         void deveBuscarTodosOsRestaurantes() {
@@ -136,6 +172,25 @@ class RestauranteControllerIT {
                     .spec(requestSpec)
             .when()
                     .get("/restaurante")
+            .then()
+                    .statusCode(HttpStatus.OK.value())
+                    .body(equalTo(asJsonString(restaurantes)));
+        }
+
+        @DisplayName("Deve retornar uma lista de restaurantes salvos com a cozinha dada")
+        @Test
+        void deveBuscarTodosOsRestaurantesPorCozinha() {
+            var restauranteDTO1 = restauranteService.salvar(restauranteDTO);
+            enderecoDTO = enderecoService.salvar( new EnderecoDTO(null, enderecoDTO.cidadeId(),
+                    "Bairro2", "rua2", "2", "42600-000"));
+            var restauranteDTO2 = restauranteService.salvar(gerarRestauranteDtoSemId(enderecoDTO.id()));
+
+            var restaurantes = List.of(restauranteDTO1,restauranteDTO2);
+
+            given()
+                    .spec(requestSpec)
+            .when()
+                    .get("/restaurante/cozinha/{cozinha}", restauranteDTO.cozinha())
             .then()
                     .statusCode(HttpStatus.OK.value())
                     .body(equalTo(asJsonString(restaurantes)));

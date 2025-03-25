@@ -90,6 +90,39 @@ class RestauranteServiceTest {
             verify(restauranteRepository).findById(restaurante.getId());
         }
 
+        @DisplayName("Deve buscar um Restaurante pelo Nome fornecido")
+        @Test
+        void deveBuscarRestaurantePorNome() {
+            // Arrange
+            when(restauranteRepository.findByNome(restaurante.getNome())).thenReturn(Optional.of(restaurante));
+            when(restauranteMapper.toDto(restaurante)).thenReturn(gerarRestauranteDto(restaurante));
+
+            // Act
+            var restauranteRecebido = restauranteService.buscarPorNome(restaurante.getNome());
+
+            // Assert
+            assertThat(restauranteRecebido)
+                    .usingRecursiveComparison()
+                    .ignoringFields("enderecoId")
+                    .isEqualTo(restaurante);
+            assertThat(restauranteRecebido.enderecoId()).isEqualTo(restaurante.getEndereco().getId());
+
+            verify(restauranteRepository).findByNome(restaurante.getNome());
+        }
+
+        @DisplayName("Deve lançar exceção ao buscar restaurante com Nome inexistente")
+        @Test
+        void deveGerarExcecao_QuandoBuscarRestaurante_PorNomeInexistente() {
+            // Arrange
+            when(restauranteRepository.findByNome(restaurante.getNome())).thenReturn(Optional.empty());
+
+            // Act & Assert
+            assertThatThrownBy(() -> restauranteService.buscarPorNome(restaurante.getNome()))
+                    .isInstanceOf(RecursoNaoEncontradoException.class)
+                    .hasMessage("Restaurante não encontrado com nome: " + restaurante.getNome());
+            verify(restauranteRepository).findByNome(restaurante.getNome());
+        }
+
         @DisplayName("Deve retornar uma lista de restaurantes salvos")
         @Test
         void deveBuscarTodosOsRestaurante() {
@@ -116,6 +149,35 @@ class RestauranteServiceTest {
                     .hasSize(3)
                     .containsExactlyElementsOf(restaurantesDto);
             verify(restauranteRepository).findAll();
+            verify(restauranteMapper, times(3)).toDto(any(Restaurante.class));
+        }
+
+        @DisplayName("Deve retornar uma lista de restaurantes salvos com a cozinha dada")
+        @Test
+        void deveBuscarTodosOsRestaurantePorCozinha() {
+            // Arrange
+            var restaurantes = List.of(gerarRestaurante(), gerarRestaurante(), gerarRestaurante());
+            var restaurantesDto = restaurantes.stream()
+                    .map(RestauranteHelper::gerarRestauranteDto)
+                    .toList();
+
+            when(restauranteRepository.findByCozinha(restauranteDTO.cozinha())).thenReturn(restaurantes);
+            when(restauranteMapper.toDto(any(Restaurante.class)))
+                    .thenAnswer(invocation -> {
+                        restaurante = invocation.getArgument(0);
+                        return gerarRestauranteDto(restaurante);
+                    });
+
+            // Act
+            List<RestauranteDTO> restaurantesRecebidos = restauranteService.buscarPorCozinha(restauranteDTO.cozinha());
+
+            // Assert
+            assertThat(restaurantesRecebidos)
+                    .isNotNull()
+                    .isNotEmpty()
+                    .hasSize(3)
+                    .containsExactlyElementsOf(restaurantesDto);
+            verify(restauranteRepository).findByCozinha(restauranteDTO.cozinha());
             verify(restauranteMapper, times(3)).toDto(any(Restaurante.class));
         }
     }

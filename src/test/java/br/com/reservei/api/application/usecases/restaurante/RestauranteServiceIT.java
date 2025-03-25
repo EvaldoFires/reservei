@@ -89,9 +89,30 @@ class RestauranteServiceIT {
                     .hasMessage("Restaurante não encontrado com id: " + id);
         }
 
+        @DisplayName("Deve buscar um Restaurante pelo Nome fornecido")
+        @Test
+        void deveBuscarRestaurantePorNome() {
+            restauranteDTO = restauranteService.salvar(restauranteDTO);
+
+            var restauranteRecebido = restauranteService.buscarPorNome(restauranteDTO.nome());
+
+            assertThat(restauranteRecebido)
+                    .usingRecursiveComparison()
+                    .isEqualTo(restauranteDTO);
+        }
+
+        @DisplayName("Deve lançar exceção ao buscar Restaurante com Nome inexistente")
+        @Test
+        void deveGerarExcecao_QuandoBuscarRestaurante_PorNomeInexistente() {
+            String nome = "Fiap Bistrô";
+            assertThatThrownBy(() -> restauranteService.buscarPorNome(nome))
+                    .isInstanceOf(RecursoNaoEncontradoException.class)
+                    .hasMessage("Restaurante não encontrado com nome: " + nome);
+        }
+
         @DisplayName("Deve retornar uma lista de restaurantes salvos")
         @Test
-        void deveBuscarTodasAsRestaurante() {
+        void deveBuscarTodasOsRestaurante() {
             var restauranteDTO1 = restauranteService.salvar(restauranteDTO);
             enderecoDTO = enderecoService.salvar( new EnderecoDTO(null, enderecoDTO.cidadeId(),
                     "Bairro2", "rua2", "2", "42600-000"));
@@ -103,6 +124,29 @@ class RestauranteServiceIT {
             var restaurantesSalvas = List.of(restauranteDTO1, restauranteDTO2, restauranteDTO3);
 
             List<RestauranteDTO> restaurantesRecebidos = restauranteService.buscarTodos();
+
+            // Assert
+            assertThat(restaurantesRecebidos)
+                    .isNotNull()
+                    .isNotEmpty()
+                    .hasSize(3)
+                    .containsExactlyElementsOf(restaurantesSalvas);
+        }
+
+        @DisplayName("Deve retornar uma lista de restaurantes salvos com a cozinha dada")
+        @Test
+        void deveBuscarTodasOsRestaurantePorCozinha() {
+            var restauranteDTO1 = restauranteService.salvar(restauranteDTO);
+            enderecoDTO = enderecoService.salvar( new EnderecoDTO(null, enderecoDTO.cidadeId(),
+                    "Bairro2", "rua2", "2", "42600-000"));
+            var restauranteDTO2 = restauranteService.salvar(gerarRestauranteDtoSemId(enderecoDTO.id()));
+            enderecoDTO = enderecoService.salvar( new EnderecoDTO(null, enderecoDTO.cidadeId(),
+                    "Bairro3", "rua3", "3", "42600-000"));
+            var restauranteDTO3 = restauranteService.salvar(gerarRestauranteDtoSemId(enderecoDTO.id()));
+
+            var restaurantesSalvas = List.of(restauranteDTO1, restauranteDTO2, restauranteDTO3);
+
+            List<RestauranteDTO> restaurantesRecebidos = restauranteService.buscarPorCozinha(restauranteDTO.cozinha());
 
             // Assert
             assertThat(restaurantesRecebidos)

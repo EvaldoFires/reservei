@@ -2,6 +2,7 @@ package br.com.reservei.api.application.usecases.restaurante;
 
 import br.com.reservei.api.application.dto.RestauranteDTO;
 import br.com.reservei.api.domain.exceptions.RecursoNaoEncontradoException;
+import br.com.reservei.api.infrastructure.utils.Cozinha;
 import br.com.reservei.api.interfaces.mapper.RestauranteMapper;
 import br.com.reservei.api.domain.model.Restaurante;
 import br.com.reservei.api.domain.repository.RestauranteRepository;
@@ -28,12 +29,29 @@ public class RestauranteServiceImpl implements RestauranteService {
     }
 
     @Override
+    public RestauranteDTO buscarPorNome(String nome) {
+        Restaurante restaurante = restauranteRepository.findByNome(nome).orElseThrow(()->
+                new RecursoNaoEncontradoException("Restaurante não encontrado com nome: " + nome)
+        );
+        return restauranteMapper.toDto(restaurante);
+    }
+
+    @Override
+    public List<RestauranteDTO> buscarPorCozinha(Cozinha cozinha) {
+        return restauranteRepository.findByCozinha(cozinha)
+                .stream()
+                .map(restauranteMapper::toDto)
+                .toList();
+    }
+
+    @Override
     public List<RestauranteDTO> buscarTodos() {
         return restauranteRepository.findAll()
                 .stream()
                 .map(restauranteMapper::toDto)
                 .toList();
     }
+
 
     @Override
     public RestauranteDTO salvar(RestauranteDTO restauranteDto) {

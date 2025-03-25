@@ -86,9 +86,47 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
             }
 
+            @DisplayName("Deve buscar um Restaurante pelo Nome fornecido")
+            @Test
+            void deveBuscarRestaurantePorNome() throws Exception {
+                when(restauranteService.buscarPorNome(restauranteDTO.nome())).thenReturn(restauranteDTO);
+
+                mockMvc.perform(get("/restaurante/nome/{idRestaurante}", restauranteDTO.nome()))
+                        .andExpect(status().isOk())
+                        .andExpect(content().json(asJsonString(restauranteDTO)));
+            }
+
+            @DisplayName("Deve lançar exceção ao buscar Restaurante com Nome inexistente")
+            @Test
+            void deveGerarExcecao_QuandoBuscarRestaurante_PorNomeInexistente() throws Exception {
+                doThrow(new RecursoNaoEncontradoException("Restaurante não encontrado com nome: " + restauranteDTO.nome()))
+                        .when(restauranteService).buscarPorNome(restauranteDTO.nome());
+
+                mockMvc.perform(get("/restaurante/nome/{idRestaurante}", restauranteDTO.nome()))
+                        .andExpect(status().isNotFound())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                        .andExpect(jsonPath("$.message")
+                                .value("Restaurante não encontrado com nome: " + restauranteDTO.nome()));
+
+            }
+
             @DisplayName("Deve retornar uma lista de restaurantes salvos")
             @Test
             void deveBuscarTodosOsRestaurantes() throws Exception {
+                var restaurantes = List.of(restauranteDTO,
+                        new RestauranteDTO(2L, "Di Basilico", Cozinha.ITALIANA, enderecoDTO.id(),
+                                2, LocalTime.NOON, LocalTime.MIDNIGHT));
+
+                when(restauranteService.buscarPorCozinha(restauranteDTO.cozinha())).thenReturn(restaurantes);
+
+                mockMvc.perform(get("/restaurante/cozinha/{cozinha}", restauranteDTO.cozinha()))
+                        .andExpect(status().isOk())
+                        .andExpect(content().json(asJsonString(restaurantes)));
+            }
+
+            @DisplayName("Deve retornar uma lista de restaurantes salvos com a cozinha dada")
+            @Test
+            void deveBuscarTodosOsRestaurantesPorCozinha() throws Exception {
                 var restaurantes = List.of(restauranteDTO,
                         new RestauranteDTO(2L, "Di Basilico", Cozinha.ITALIANA, enderecoDTO.id(),
                                 2, LocalTime.NOON, LocalTime.MIDNIGHT));

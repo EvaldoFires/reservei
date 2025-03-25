@@ -42,7 +42,6 @@ class EstadoControllerIT {
 
     @BeforeEach
     void setUp() {
-//        limparBanco();
         estadoDTO = gerarEstadoDto(gerarEstadoSemId());
 
         RestAssured.port = port;

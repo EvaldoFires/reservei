@@ -2,6 +2,7 @@ package br.com.reservei.api.interfaces.controller;
 
 import br.com.reservei.api.application.dto.RestauranteDTO;
 import br.com.reservei.api.application.usecases.restaurante.RestauranteService;
+import br.com.reservei.api.infrastructure.utils.Cozinha;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,6 +32,29 @@ public class RestauranteController {
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     public ResponseEntity<RestauranteDTO> buscarPorId(@PathVariable Long idRestaurante){
         return ResponseEntity.ok(restauranteService.buscarPorId(idRestaurante));
+    }
+
+    @GetMapping("/nome/{nomeRestaurante}")
+    @Operation(summary = "Buscar Restaurante por nome", description = "Busca um Restaurante pelo seu nome")
+    @ApiResponse(responseCode = "200", description = "Restaurante encontrado com sucesso",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = RestauranteDTO.class)))
+    @ApiResponse(responseCode = "404", description = "Restaurante nao encontrado")
+    @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    public ResponseEntity<RestauranteDTO> buscarPorNome(@PathVariable String nomeRestaurante){
+        return ResponseEntity.ok(restauranteService.buscarPorNome(nomeRestaurante));
+    }
+
+    @GetMapping("/cozinha/{cozinhaDoRestaurante}")
+    @Operation(summary = "Buscar todos os Restaurantes pela cozinha", description = "Busca uma lista de restaurantes" +
+            " pelo tipo de cozinha")
+    @ApiResponse(responseCode = "200", description = "Restaurantes encontrados com sucesso",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = RestauranteDTO.class)))
+    @ApiResponse(responseCode = "404", description = "Restaurante nao encontrado")
+    @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    public ResponseEntity<List<RestauranteDTO>> buscarPorCozinha(@PathVariable Cozinha cozinhaDoRestaurante){
+        return ResponseEntity.ok(restauranteService.buscarPorCozinha(cozinhaDoRestaurante));
     }
 
     @GetMapping
