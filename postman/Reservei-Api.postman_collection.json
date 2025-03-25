@@ -1,0 +1,2333 @@
+{
+	"info": {
+		"_postman_id": "fa4ef581-7471-4fa9-a6cc-a7d0a44e6072",
+		"name": "Reservei-Api",
+		"description": "Api para Reserva e Avaliação de Restaurantes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8889011"
+	},
+	"item": [
+		{
+			"name": "Restaurante",
+			"item": [
+				{
+					"name": "Busca Restaurante pelo Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/restaurante/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurante",
+								"2"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Busca Restaurante pelo Id 200ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/restaurante/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"restaurante",
+										"1"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 14:05:00 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"nome\": \"KiKumyda Boua\",\n    \"cozinha\": \"JAPONESA\",\n    \"enderecoId\": 1,\n    \"reservasPorHora\": 50,\n    \"inicioExpediente\": \"11:00:00\",\n    \"finalExpediente\": \"23:59:59\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Lista todos os Restaurantes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/restaurante",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurante"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Lista todos os Restaurantes 200ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/restaurante",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"restaurante"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 16:31:09 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"nome\": \"KiKumyda Boua\",\n        \"cozinha\": \"JAPONESA\",\n        \"enderecoId\": 1,\n        \"reservasPorHora\": 50,\n        \"inicioExpediente\": \"11:00:00\",\n        \"finalExpediente\": \"23:59:59\"\n    },\n    {\n        \"id\": 3,\n        \"nome\": \"Sabor Mineiro\",\n        \"cozinha\": \"MINEIRA\",\n        \"enderecoId\": 2,\n        \"reservasPorHora\": 45,\n        \"inicioExpediente\": \"12:00:00\",\n        \"finalExpediente\": \"22:00:00\"\n    },\n    {\n        \"id\": 4,\n        \"nome\": \"Le Petit Chateau\",\n        \"cozinha\": \"FRANCESA\",\n        \"enderecoId\": 3,\n        \"reservasPorHora\": 60,\n        \"inicioExpediente\": \"10:30:00\",\n        \"finalExpediente\": \"23:00:00\"\n    },\n    {\n        \"id\": 5,\n        \"nome\": \"Dragon Wok\",\n        \"cozinha\": \"CHINESA\",\n        \"enderecoId\": 4,\n        \"reservasPorHora\": 40,\n        \"inicioExpediente\": \"11:00:00\",\n        \"finalExpediente\": \"22:30:00\"\n    },\n    {\n        \"id\": 6,\n        \"nome\": \"Delícias do Sertão\",\n        \"cozinha\": \"NORDESTINA\",\n        \"enderecoId\": 5,\n        \"reservasPorHora\": 55,\n        \"inicioExpediente\": \"12:00:00\",\n        \"finalExpediente\": \"23:59:59\"\n    },\n    {\n        \"id\": 7,\n        \"nome\": \"Mediterranean Feast\",\n        \"cozinha\": \"ARABE\",\n        \"enderecoId\": 6,\n        \"reservasPorHora\": 48,\n        \"inicioExpediente\": \"11:30:00\",\n        \"finalExpediente\": \"23:00:00\"\n    },\n    {\n        \"id\": 8,\n        \"nome\": \"Viva México\",\n        \"cozinha\": \"MEXICANA\",\n        \"enderecoId\": 7,\n        \"reservasPorHora\": 52,\n        \"inicioExpediente\": \"12:00:00\",\n        \"finalExpediente\": \"23:30:00\"\n    },\n    {\n        \"id\": 9,\n        \"nome\": \"Tailândia Gourmet\",\n        \"cozinha\": \"TAILANDESA\",\n        \"enderecoId\": 8,\n        \"reservasPorHora\": 49,\n        \"inicioExpediente\": \"11:15:00\",\n        \"finalExpediente\": \"22:45:00\"\n    },\n    {\n        \"id\": 10,\n        \"nome\": \"Pasta Bella\",\n        \"cozinha\": \"ITALIANA\",\n        \"enderecoId\": 9,\n        \"reservasPorHora\": 57,\n        \"inicioExpediente\": \"10:45:00\",\n        \"finalExpediente\": \"23:15:00\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "salva restaurante",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Pasta Bella\",\r\n  \"cozinha\": \"ITALIANA\",\r\n  \"enderecoId\": 1,\r\n  \"reservasPorHora\": 57,\r\n  \"inicioExpediente\": \"10:45:00\",\r\n  \"finalExpediente\": \"23:15:00\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restaurante",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurante"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Salva restaurante 200ok",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nome\": \"KiKumyda Boua\",\r\n  \"cozinha\": \"JAPONESA\",\r\n  \"enderecoId\": 1,\r\n  \"reservasPorHora\": 50,\r\n  \"inicioExpediente\": \"11:00:00\",\r\n  \"finalExpediente\": \"23:59:59\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/restaurante",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"restaurante"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 14:03:26 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"nome\": \"KiKumyda Boua\",\n    \"cozinha\": \"JAPONESA\",\n    \"enderecoId\": 1,\n    \"reservasPorHora\": 50,\n    \"inicioExpediente\": \"11:00:00\",\n    \"finalExpediente\": \"23:59:59\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Atualiza Restaurante",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"KiKumyda Boua\",\r\n  \"cozinha\": \"JAPONESA\",\r\n  \"enderecoId\": 1,\r\n  \"reservasPorHora\": 75,\r\n  \"inicioExpediente\": \"11:00:00\",\r\n  \"finalExpediente\": \"23:59:59\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/restaurante/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurante",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Atualiza restaurante 200ok",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nome\": \"KiKumyda Boua\",\r\n  \"cozinha\": \"JAPONESA\",\r\n  \"enderecoId\": 1,\r\n  \"reservasPorHora\": 75,\r\n  \"inicioExpediente\": \"11:00:00\",\r\n  \"finalExpediente\": \"23:59:59\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/restaurante/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"restaurante",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 15:46:05 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"nome\": \"KiKumyda Boua\",\n    \"cozinha\": \"JAPONESA\",\n    \"enderecoId\": 1,\n    \"reservasPorHora\": 75,\n    \"inicioExpediente\": \"11:00:00\",\n    \"finalExpediente\": \"23:59:59\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Exclui Restaurante",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/restaurante/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurante",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Exclui restaurante 204ok",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/restaurante/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"restaurante",
+										"1"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 15:47:33 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			],
+			"description": "Recurso para gerenciamento de Restaurantes"
+		},
+		{
+			"name": "Endereço",
+			"item": [
+				{
+					"name": "Salva Endereço",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cidadeId\": 1,\r\n  \"bairro\": \"brooklin\",\r\n  \"rua\": \"rua dos alpes suíços\",\r\n  \"numero\": \"2644\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/endereco",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"endereco"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Salva endereco 200ok",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"cidadeId\": 1,\r\n  \"bairro\": \"chacara santa maria\",\r\n  \"rua\": \"estrada dos guarantas\",\r\n  \"numero\": \"47\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/endereco",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"endereco"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 21 Mar 2025 22:58:30 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"cidadeId\": 1,\n    \"bairro\": \"chacara santa maria\",\n    \"rua\": \"estrada dos guarantas\",\n    \"numero\": \"47\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Busca Endereço pelo Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/endereco/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"endereco",
+								"1"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Busca Endereço pelo Id 200ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/restaurante/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"restaurante",
+										"1"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 14:05:00 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"nome\": \"KiKumyda Boua\",\n    \"cozinha\": \"JAPONESA\",\n    \"enderecoId\": 1,\n    \"reservasPorHora\": 50,\n    \"inicioExpediente\": \"11:00:00\",\n    \"finalExpediente\": \"23:59:59\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Lista todos os Endereços",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/endereco",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"endereco"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Lista todos Endereços 200ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/endereco",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"endereco"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 16:15:11 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"cidadeId\": 1,\n        \"bairro\": \"fukushima\",\n        \"rua\": \"rua apologos orientais\",\n        \"numero\": \"575\"\n    },\n    {\n        \"id\": 2,\n        \"cidadeId\": 1,\n        \"bairro\": \"liberdade\",\n        \"rua\": \"rua dos ipês\",\n        \"numero\": \"234\"\n    },\n    {\n        \"id\": 3,\n        \"cidadeId\": 1,\n        \"bairro\": \"jardins\",\n        \"rua\": \"avenida paulista\",\n        \"numero\": \"1000\"\n    },\n    {\n        \"id\": 4,\n        \"cidadeId\": 1,\n        \"bairro\": \"vila olímpia\",\n        \"rua\": \"rua das margens\",\n        \"numero\": \"78B\"\n    },\n    {\n        \"id\": 5,\n        \"cidadeId\": 1,\n        \"bairro\": \"perdizes\",\n        \"rua\": \"rua da paz\",\n        \"numero\": \"450\"\n    },\n    {\n        \"id\": 6,\n        \"cidadeId\": 1,\n        \"bairro\": \"moema\",\n        \"rua\": \"alameda dos anjos\",\n        \"numero\": \"99\"\n    },\n    {\n        \"id\": 7,\n        \"cidadeId\": 1,\n        \"bairro\": \"pinheiros\",\n        \"rua\": \"rua das flores\",\n        \"numero\": \"320\"\n    },\n    {\n        \"id\": 8,\n        \"cidadeId\": 1,\n        \"bairro\": \"santana\",\n        \"rua\": \"avenida dos sonhos\",\n        \"numero\": \"785\"\n    },\n    {\n        \"id\": 9,\n        \"cidadeId\": 1,\n        \"bairro\": \"brooklin\",\n        \"rua\": \"rua dos lírios\",\n        \"numero\": \"12A\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Atualiza Endereço",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cidadeId\": 1,\r\n  \"bairro\": \"fukushima\",\r\n  \"rua\": \"rua apologos orientais\",\r\n  \"numero\": \"800\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/endereco/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"endereco",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Atualiza Endereço 200ok",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"cidadeId\": 1,\r\n  \"bairro\": \"fukushima\",\r\n  \"rua\": \"rua apologos orientais\",\r\n  \"numero\": \"800\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/endereco/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"endereco",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 16:35:25 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"cidadeId\": 1,\n    \"bairro\": \"fukushima\",\n    \"rua\": \"rua apologos orientais\",\n    \"numero\": \"800\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Exclui Endereço",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/endereco/25",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"endereco",
+								"25"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Exclui Endereço 204ok",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/endereco/10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"endereco",
+										"10"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 16:37:29 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Exclui Endereço não encontrado 404",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/endereco/25",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"endereco",
+										"25"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 16:38:01 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Endereço não encontrado com id: 25\",\n    \"timestamp\": \"2025-03-23T13:38:01.9975329\",\n    \"status\": 404\n}"
+						}
+					]
+				}
+			],
+			"description": "Recurso para gerenciamento de Endereços"
+		},
+		{
+			"name": "Cidade",
+			"item": [
+				{
+					"name": "Salva Cidade",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"São Paulo\",\r\n  \"estadoId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cidade",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cidade"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Salva cidade 200ok",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nome\": \"Itapecerica da Serra\",\r\n  \"estadoId\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/cidade",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"cidade"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 21 Mar 2025 22:57:45 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"nome\": \"Itapecerica da Serra\",\n    \"estadoId\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "Busca Cidade pelo Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cidade/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cidade",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Busca cidade id não encontrado 404",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/cidade/10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"cidade",
+										"10"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 16:57:38 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Cidade não encontrada com id: 10\",\n    \"timestamp\": \"2025-03-23T13:57:38.0094946\",\n    \"status\": 404\n}"
+						},
+						{
+							"name": "busca cidade por id 200ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/cidade/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"cidade",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 16:59:27 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"nome\": \"Itapecerica da Serra\",\n    \"estadoId\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "Busca todas as cidades",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cidade",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cidade"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Busca todas as cidades 200ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/cidade",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"cidade"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 17:00:06 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"nome\": \"Itapecerica da Serra\",\n        \"estadoId\": 1\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Atualiza Cidade",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Itapecerica da Serra do Sul\",\r\n  \"estadoId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cidade/25",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cidade",
+								"25"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Atualiza cidade 200ok",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nome\": \"Itapecerica da Serra do Sul\",\r\n  \"estadoId\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/cidade/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"cidade",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 17:01:20 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"nome\": \"Itapecerica da Serra do Sul\",\n    \"estadoId\": 1\n}"
+						},
+						{
+							"name": "Atualiza cidade não encontrada 404",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nome\": \"Itapecerica da Serra do Sul\",\r\n  \"estadoId\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/cidade/25",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"cidade",
+										"25"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 17:01:39 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Cidade não encontrada com id: 25\",\n    \"timestamp\": \"2025-03-23T14:01:39.3062963\",\n    \"status\": 404\n}"
+						}
+					]
+				},
+				{
+					"name": "Exclui cidade",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cidade/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cidade",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Exclui cidade 204ok",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/cidade/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"cidade",
+										"2"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 17:02:54 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			],
+			"description": "Recurso para gerenciamento de Cidades"
+		},
+		{
+			"name": "Estado",
+			"item": [
+				{
+					"name": "Salva Estado",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Minas Gerais\",\r\n  \"sigla\": \"MG\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/estado",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"estado"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "salva estado 200ok",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nome\": \"São Paulo\",\r\n  \"sigla\": \"SP\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/estado",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"estado"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 21 Mar 2025 22:56:33 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"nome\": \"São Paulo\",\n    \"sigla\": \"SP\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Consulta Estado pelo Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/estado/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"estado",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "busca estado pelo Id 200ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/estado/25",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"estado",
+										"25"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 17:04:32 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"nome\": \"São Paulo\",\n    \"sigla\": \"SP\"\n}"
+						},
+						{
+							"name": "busca estado pelo id não encontrado 404",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/estado/25",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"estado",
+										"25"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 17:05:08 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Estado não encontrado com id: 25\",\n    \"timestamp\": \"2025-03-23T14:05:08.629806\",\n    \"status\": 404\n}"
+						}
+					]
+				},
+				{
+					"name": "Lista todos os Estados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/estado",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"estado"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Lista Estados 200ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/estado",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"estado"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 17:07:55 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"nome\": \"São Paulo\",\n        \"sigla\": \"SP\"\n    },\n    {\n        \"id\": 2,\n        \"nome\": \"Minas Gerais\",\n        \"sigla\": \"MG\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Atualiza Estado pelo Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Gerais das Minas\",\r\n  \"sigla\": \"MG\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/estado/25",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"estado",
+								"25"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Atualiza Estado pelo Id 200ok",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nome\": \"Gerais das Minas\",\r\n  \"sigla\": \"MG\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/estado/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"estado",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 17:09:16 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 2,\n    \"nome\": \"Gerais das Minas\",\n    \"sigla\": \"MG\"\n}"
+						},
+						{
+							"name": "Atualiza Estado pelo id não encontrado 404",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nome\": \"Gerais das Minas\",\r\n  \"sigla\": \"MG\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/estado/25",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"estado",
+										"25"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 17:09:41 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Estado não encontrado com id: 25\",\n    \"timestamp\": \"2025-03-23T14:09:41.3610404\",\n    \"status\": 404\n}"
+						}
+					]
+				},
+				{
+					"name": "Exclui Estado",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/estado/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"estado",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Exclui Estado pelo Id não encontrado 404",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/estado/25",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"estado",
+										"25"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 17:10:22 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Estado não encontrado com id: 25\",\n    \"timestamp\": \"2025-03-23T14:10:22.9456055\",\n    \"status\": 404\n}"
+						},
+						{
+							"name": "Exclui Estado pelo Id 204ok",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/estado/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"estado",
+										"2"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 17:10:39 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			],
+			"description": "Recurso para gerenciamento de Estados"
+		},
+		{
+			"name": "Avaliação",
+			"item": [
+				{
+					"name": "Salva uma Avaliação",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nota\": 5,\r\n  \"comentario\": \"Só tenho a agradecer por ter conhecido esse lugar! Vou vir todos os meses!!!\",\r\n  \"restauranteId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/avaliacao",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"avaliacao"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Salva Avaliação 200ok",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nota\": 5,\r\n  \"comentario\": \"Comida sensacional! Vou voltar outras vezes!!!\",\r\n  \"restauranteId\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/avaliacao",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"avaliacao"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 17:15:22 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"nota\": 5,\n    \"comentario\": \"Comida sensacional! Vou voltar outras vezes!!!\",\n    \"dataCriacao\": \"2025-03-23T14:15:22.0355354\",\n    \"restauranteId\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "Lista todas as Avaliações",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/avaliacao",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"avaliacao"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Lista todas Avaliações 200ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/avaliacao",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"avaliacao"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 17:17:33 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"nota\": 5,\n        \"comentario\": \"Comida sensacional! Vou voltar outras vezes!!!\",\n        \"dataCriacao\": \"2025-03-23T14:15:22.035535\",\n        \"restauranteId\": 1\n    },\n    {\n        \"id\": 2,\n        \"nota\": 4,\n        \"comentario\": \"A comida é muito boa. Pena que às 12h é um horário de pico...\",\n        \"dataCriacao\": \"2025-03-23T14:16:29.289366\",\n        \"restauranteId\": 1\n    },\n    {\n        \"id\": 3,\n        \"nota\": 2,\n        \"comentario\": \"Muita fila e poucas variações. O ambiente é bem iluminado, mas precisam colocar mais opções no buffet\",\n        \"dataCriacao\": \"2025-03-23T14:17:04.527429\",\n        \"restauranteId\": 1\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Busca Avaliação pelo Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/avaliacao/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"avaliacao",
+								"10"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Busca Avaliação pelo Id 200ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/avaliacao/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"avaliacao",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 17:18:16 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"nota\": 5,\n    \"comentario\": \"Comida sensacional! Vou voltar outras vezes!!!\",\n    \"dataCriacao\": \"2025-03-23T14:15:22.035535\",\n    \"restauranteId\": 1\n}"
+						},
+						{
+							"name": "Busca Avaliação pelo Id não encontrada 404",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/avaliacao/10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"avaliacao",
+										"10"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 17:18:31 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Avaliação não encontrada com id: 10\",\n    \"timestamp\": \"2025-03-23T14:18:31.6444311\",\n    \"status\": 404\n}"
+						}
+					]
+				},
+				{
+					"name": "Alterar uma Avaliação pelo Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nota\": 3,\r\n  \"comentario\": \"Muita fila das 12h até 13h (horário de pico), bem como algumas poucas variações. O ambiente é bem iluminado, mas precisam colocar mais opções no buffet\",\r\n  \"restauranteId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/avaliacao/15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"avaliacao",
+								"15"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Alterar avaliação pelo Id 200ok",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nota\": 3,\r\n  \"comentario\": \"Muita fila das 12h até 13h (horário de pico), bem como algumas poucas variações. O ambiente é bem iluminado, mas precisam colocar mais opções no buffet\",\r\n  \"restauranteId\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/avaliacao/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"avaliacao",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 17:20:23 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"nota\": 3,\n    \"comentario\": \"Muita fila das 12h até 13h (horário de pico), bem como algumas poucas variações. O ambiente é bem iluminado, mas precisam colocar mais opções no buffet\",\n    \"dataCriacao\": null,\n    \"restauranteId\": 1\n}"
+						},
+						{
+							"name": "Alterar Avaliação pelo Id não encontrado 404",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nota\": 3,\r\n  \"comentario\": \"Muita fila das 12h até 13h (horário de pico), bem como algumas poucas variações. O ambiente é bem iluminado, mas precisam colocar mais opções no buffet\",\r\n  \"restauranteId\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/avaliacao/15",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"avaliacao",
+										"15"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 17:25:29 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Avaliação não encontrada com id: 15\",\n    \"timestamp\": \"2025-03-23T14:25:29.7594759\",\n    \"status\": 404\n}"
+						}
+					]
+				},
+				{
+					"name": "Excluir uma Avaliação pelo Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/avaliacao/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"avaliacao",
+								"4"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Excluir Avaliação pelo Id sucesso 204",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/avaliacao/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"avaliacao",
+										"4"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 17:26:50 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Excluir Avaliação pelo Id não encontrado 404",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/avaliacao/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"avaliacao",
+										"4"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 17:27:07 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Avaliação não encontrada com id: 4\",\n    \"timestamp\": \"2025-03-23T14:27:07.132458\",\n    \"status\": 404\n}"
+						}
+					]
+				}
+			],
+			"description": "Recurso para Avaliação dos Restaurantes"
+		}
+	]
+}
