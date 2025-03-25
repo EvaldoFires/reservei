@@ -116,7 +116,13 @@
     <!-- https://mvnrepository.com/artifact/io.gatling/gatling-core -->
     <dependency>
       <groupId>io.gatling</groupId>
-      <artifactId>gatling-core</artifactId>
+      <artifactId>gatling-app</artifactId>
+      <version>3.13.5</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/io.gatling/gatling-core-java -->
+    <dependency>
+      <groupId>io.gatling</groupId>
+      <artifactId>gatling-core-java</artifactId>
       <version>3.13.5</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/io.gatling.highcharts/gatling-charts-highcharts -->
@@ -232,30 +238,14 @@
         <artifactId>gatling-maven-plugin</artifactId>
         <version>4.10.1</version>
         <configuration>
-          <simulationClass>br.com.reservei.api.performance</simulationClass>
+          <simulationClass>br.com.reservei.api.performance.PerformanceSimulation</simulationClass>
+          <jvmArgs>
+            <jvmArg>--add-opens</jvmArg>
+            <jvmArg>java.base/java.lang=ALL-UNNAMED</jvmArg>
+          </jvmArgs>
         </configuration>
       </plugin>
     </plugins>
   </build>
-
-  <profiles>
-    <profile>
-      <id>performance-test</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>io.gatling</groupId>
-            <artifactId>gatling-core</artifactId>
-            <version>3.13.5</version>
-            <configuration>
-              <simulationClass>br.com.reservei.api.performance.PerformanceSimulation</simulationClass>
-            </configuration>
-          </plugin>
-
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
-
 
 </project>
