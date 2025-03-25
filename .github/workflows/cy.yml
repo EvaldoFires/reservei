@@ -1,0 +1,30 @@
+name: CI - Testes Java Spring Boot
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar JDK 21 (Amazon Corretto)
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: '21'
+          cache: maven
+
+      - name: Configurar permissões para execução do Maven Wrapper
+        run: chmod +x mvnw
+
+      - name: Rodar testes com Maven
+        run: ./mvnw test
