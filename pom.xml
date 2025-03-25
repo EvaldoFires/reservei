@@ -113,15 +113,23 @@
     </dependency>
 
     <!-- Teste de Performance-->
+    <!-- https://mvnrepository.com/artifact/io.gatling/gatling-core -->
     <dependency>
       <groupId>io.gatling</groupId>
-      <artifactId>gatling-core</artifactId>
-      <version>3.13.4</version>
+      <artifactId>gatling-app</artifactId>
+      <version>3.13.5</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/io.gatling/gatling-core-java -->
+    <dependency>
+      <groupId>io.gatling</groupId>
+      <artifactId>gatling-core-java</artifactId>
+      <version>3.13.5</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/io.gatling.highcharts/gatling-charts-highcharts -->
     <dependency>
       <groupId>io.gatling.highcharts</groupId>
       <artifactId>gatling-charts-highcharts</artifactId>
-      <version>3.13.4</version>
+      <version>3.13.5</version>
     </dependency>
 
     <!-- para testar controller de forma mais fluida -->
@@ -230,11 +238,14 @@
         <artifactId>gatling-maven-plugin</artifactId>
         <version>4.10.1</version>
         <configuration>
-          <simulationClass>br.com.reservei.api.performance</simulationClass>
+          <simulationClass>br.com.reservei.api.performance.PerformanceSimulation</simulationClass>
+          <jvmArgs>
+            <jvmArg>--add-opens</jvmArg>
+            <jvmArg>java.base/java.lang=ALL-UNNAMED</jvmArg>
+          </jvmArgs>
         </configuration>
       </plugin>
     </plugins>
   </build>
-
 
 </project>
