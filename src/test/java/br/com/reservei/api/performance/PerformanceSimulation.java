@@ -55,7 +55,7 @@ public class PerformanceSimulation extends Simulation {
 
     ActionBuilder adicionarEstadoRequest = http("request: adicionar estado")
             .post("/estado")
-            .body(StringBody("{\"nome\": \"Minas Gerais\", \"sigla\":\"MG\"}"))
+            .body(StringBody("{\"nome\": \"#{nome}\", \"sigla\": \"#{sigla}\"}"))
             .check(status().is(201))
             .check(jsonPath("$.id").saveAs("estadoId"));
 
@@ -78,7 +78,7 @@ public class PerformanceSimulation extends Simulation {
             .exec(adicionarEstadoRequest)
             .exec(session -> {
                 String id = session.getString("estadoId");
-                //System.out.println("ID do Insert=" + id);
+                System.out.println("ID do Insert=" + id);
                 idsInseridos.add(id);
                 return session;
             });
@@ -96,7 +96,13 @@ public class PerformanceSimulation extends Simulation {
                 String id = idsInseridos.get(i);
                 return session.set("estadoId", id);
             })
-            .exec(buscarEstadoRequest);
+            .exec(buscarEstadoRequest)
+            .exec(session -> {
+                String id = session.getString("estadoId");
+                System.out.println("ID da Busca=" + id);
+                idsInseridos.add(id);
+                return session;
+            });;
 
     {
         setUp(
@@ -111,7 +117,7 @@ public class PerformanceSimulation extends Simulation {
                                 .during(Duration.ofSeconds(10))
                 ),
                 cenarioBuscarEstado.injectOpen(
-                        nothingFor(Duration.ofSeconds(55)),
+                        nothingFor(Duration.ofSeconds(60)),
                         rampUsersPerSec(1)
                                 .to(10)
                                 .during(Duration.ofSeconds(10)),
